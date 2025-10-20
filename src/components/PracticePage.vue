@@ -1,8 +1,9 @@
 <script setup>
 import { computed } from "vue";
-import { getSelectedLevel } from "../composables/useLevel";
+import { getSelectedLevel, getSelectedTopic } from "../composables/useLevel";
 
 const selectedLevel = computed(() => getSelectedLevel());
+const selectedTopic = computed(() => getSelectedTopic());
 </script>
 
 <template>
@@ -10,12 +11,11 @@ const selectedLevel = computed(() => getSelectedLevel());
     <div class="practice-container">
       <h1>Practice Mode</h1>
       <p class="level-info" v-if="selectedLevel">
-        Current Level: <strong>{{ selectedLevel }}</strong>
+        Level: <strong>{{ selectedLevel }}</strong>
       </p>
-      <p class="level-info" v-else>
-        No level selected. <router-link to="/">Choose a level</router-link>
+      <p class="topic-info" v-if="selectedTopic">
+        Topic: <strong>{{ selectedTopic }}</strong>
       </p>
-
       <div class="coming-soon">
         <h2>🚀 Coming Soon</h2>
         <p>Practice exercises will be available here</p>
@@ -46,20 +46,17 @@ h1 {
   font-size: 2.5rem;
 }
 
-.level-info {
+.level-info,
+.topic-info {
   color: rgba(255, 255, 255, 0.8);
   font-size: 1.2rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
-.level-info strong {
+.level-info strong,
+.topic-info strong {
   color: #fc9e4f;
   text-transform: capitalize;
-}
-
-.level-info a {
-  color: #9dbbae;
-  text-decoration: underline;
 }
 
 .coming-soon {

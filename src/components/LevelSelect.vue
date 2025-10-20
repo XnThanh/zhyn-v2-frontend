@@ -31,9 +31,8 @@ function handleKeydown(e) {
 function selectLevel(index) {
   const level = levels[index];
   setSelectedLevel(level.id);
-  console.log("Selected level:", level.id);
-  // Navigate to practice page (you can change this route)
-  router.push("/practice");
+  // Navigate to topic select page
+  router.push("/topic");
 }
 
 onMounted(() => {
