@@ -17,7 +17,7 @@ function closeMenu() {
     <div class="navbar-container">
       <!-- Logo on the left -->
       <div class="navbar-logo">
-        <a href="/" @click="closeMenu">ZHYN</a>
+        <router-link to="/" @click="closeMenu">ZHYN</router-link>
       </div>
 
       <!-- Hamburger menu button on the right -->
@@ -34,9 +34,15 @@ function closeMenu() {
 
       <!-- Navigation menu -->
       <div class="nav-menu" :class="{ active: isMenuOpen }">
-        <a href="#" class="nav-link" @click="closeMenu">Home</a>
-        <a href="#" class="nav-link" @click="closeMenu">Practice</a>
-        <a href="#" class="nav-link" @click="closeMenu">Dictionary</a>
+        <router-link to="/" class="nav-link" @click="closeMenu"
+          >Home</router-link
+        >
+        <router-link to="/practice" class="nav-link" @click="closeMenu"
+          >Practice</router-link
+        >
+        <router-link to="/playground" class="nav-link" @click="closeMenu"
+          >Playground</router-link
+        >
         <a href="#" class="nav-link" @click="closeMenu">About</a>
       </div>
     </div>
@@ -152,6 +158,14 @@ function closeMenu() {
 .nav-link:hover::after {
   width: 80%;
   background: #fc9e4f;
+}
+
+.nav-link.router-link-active {
+  background: rgba(252, 158, 79, 0.2);
+}
+
+.nav-link.router-link-active::after {
+  width: 80%;
 }
 
 /* Mobile responsive */
