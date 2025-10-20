@@ -188,13 +188,32 @@ const topic = ref("greetings");
 <style scoped>
 .api-playground {
   margin-top: 2rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 2rem;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  background: rgba(22, 25, 37, 0.85);
+  backdrop-filter: blur(10px);
 }
+
+h2 {
+  color: #FC9E4F;
+  margin-bottom: 1.5rem;
+}
+
+h3 {
+  color: #C08497;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
 section {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(22, 25, 37, 0.5);
+  border-radius: 8px;
+  border-left: 4px solid #FC9E4F;
 }
+
 .row {
   display: flex;
   gap: 0.5rem;
@@ -202,30 +221,56 @@ section {
   flex-wrap: wrap;
   margin-bottom: 0.5rem;
 }
+
 label {
   font-size: 0.9rem;
-  color: #555;
+  color: #9DBBAE;
+  font-weight: 500;
 }
+
 input {
-  padding: 0.25rem 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(22, 25, 37, 0.6);
+  border: 1px solid #5B5B5B;
+  border-radius: 6px;
+  color: white;
+  transition: all 0.3s;
 }
+
+input:focus {
+  outline: none;
+  border-color: #FC9E4F;
+  background: rgba(22, 25, 37, 0.8);
+}
+
+small {
+  color: #5B5B5B;
+  font-size: 0.8rem;
+}
+
 .buttons {
   display: flex;
   gap: 0.5rem;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
+
 pre {
-  background: #111;
-  color: #0f0;
-  padding: 0.5rem;
-  border-radius: 4px;
+  background: #161925;
+  color: #9DBBAE;
+  padding: 1rem;
+  border-radius: 8px;
   max-height: 300px;
   overflow: auto;
+  border: 1px solid #5B5B5B;
+  margin-top: 0.5rem;
 }
+
 .error {
-  color: #f66;
+  color: #FC9E4F;
 }
+
 .muted {
-  color: #888;
+  color: #5B5B5B;
 }
 </style>
