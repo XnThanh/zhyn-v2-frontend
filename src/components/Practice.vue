@@ -1,6 +1,8 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from "vue";
 import { getSelectedLevel, getSelectedTopic } from "../composables/useLevel";
+import { generateSentences } from "../api/levelMap";
+import CharDisplay from "./CharDisplay.vue";
 
 const selectedLevel = computed(() => getSelectedLevel());
 const selectedTopic = computed(() => getSelectedTopic());
@@ -10,7 +12,21 @@ const initialTime = 60; // seconds
 const timeLeft = ref(initialTime);
 let timer = null;
 
+// Format time as mm:ss
+const formattedTime = computed(() => {
+  const minutes = Math.floor(timeLeft.value / 60);
+  const seconds = timeLeft.value % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(
+    2,
+    "0"
+  )}`;
+});
+
 onMounted(() => {
+  // Fetch sentences from backend
+  fetchSentences();
+
+  // Start timer
   timer = setInterval(() => {
     if (timeLeft.value > 0) timeLeft.value--;
   }, 1000);
@@ -19,9 +35,49 @@ onUnmounted(() => {
   clearInterval(timer);
 });
 
-// Placeholder for backend-generated words
-const words = ref(["example", "words", "from", "backend"]);
+// Words from backend
+const words = ref([]);
 const userInput = ref("");
+const loading = ref(true);
+const error = ref(null);
+
+// Fetch sentences from backend
+async function fetchSentences() {
+  try {
+    loading.value = true;
+    error.value = null;
+
+    let level = selectedLevel.value;
+    const topic = selectedTopic.value;
+    // Capitalize first letter of level name if needed
+    if (level && typeof level === "string") {
+      level = level.charAt(0).toUpperCase() + level.slice(1);
+    }
+
+    if (!level || !topic) {
+      error.value = "Level and topic are required";
+      return;
+    }
+
+    const payload = { levelName: level, topic: topic };
+    console.log("generateSentences payload:", payload);
+    const response = await generateSentences(payload);
+    console.log("generateSentences response:", response);
+
+    if (response) {
+      // Backend returns array directly, not wrapped in { sentences: [...] }
+      words.value = Array.isArray(response)
+        ? response
+        : response.sentences || [];
+      console.log("words.value updated:", words.value);
+    }
+  } catch (err) {
+    console.error("Error fetching sentences:", err);
+    error.value = err.message || "Failed to load sentences";
+  } finally {
+    loading.value = false;
+  }
+}
 </script>
 
 <template>
@@ -29,11 +85,17 @@ const userInput = ref("");
     <div class="practice-container">
       <!-- Main content above -->
       <div class="practice-main">
-        <div class="timer">⏰ {{ timeLeft }}s</div>
+        <div class="timer">{{ formattedTime }}</div>
         <div class="word-box">
-          <span v-for="(word, idx) in words" :key="idx" class="word">{{
-            word
-          }}</span>
+          <span v-if="loading" class="loading-text">Loading sentences...</span>
+          <span v-else-if="error" class="error-text">{{ error }}</span>
+          <template v-else>
+            <CharDisplay
+              v-for="(char, idx) in words.join('').split('')"
+              :key="idx"
+              :char="char"
+            />
+          </template>
         </div>
         <input
           class="input-box"
@@ -124,14 +186,25 @@ h1 {
   font-size: 1.7rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  align-content: flex-start;
+  overflow: hidden;
   margin-bottom: 1.2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   box-sizing: border-box;
 }
 .word {
   margin: 0 0.5em;
+}
+
+.loading-text,
+.error-text {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.error-text {
+  color: #fc9e4f;
 }
 
 .input-box {
