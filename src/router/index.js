@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import LevelSelect from "../components/LevelSelect.vue";
 import TopicSelect from "../components/TopicSelect.vue";
 import Practice from "../components/Practice.vue";
+import Results from "../components/Results.vue";
 import ApiPlayground from "../components/ApiPlayground.vue";
 
 const routes = [
@@ -19,6 +20,11 @@ const routes = [
     path: "/practice",
     name: "Practice",
     component: Practice,
+  },
+  {
+    path: "/results",
+    name: "Results",
+    component: Results,
   },
   {
     path: "/playground",
