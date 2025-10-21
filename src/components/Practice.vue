@@ -2,8 +2,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRouter } from "vue-router";
 import { getSelectedLevel, getSelectedTopic } from "../composables/useLevel";
-// TEMPORARY: Comment out LLM import for development
-// import { generateSentences } from "../api/levelMap";
+import { generateSentences } from "../api/levelMap";
 import { getAnswer } from "../api/zhuyinDictionary";
 import CharDisplay from "./CharDisplay.vue";
 import {
@@ -22,7 +21,7 @@ const selectedTopic = computed(() => getSelectedTopic());
 const currentCharIdx = ref(0); // index of the current character to type
 
 // Countdown timer
-const initialTime = 10; // seconds (DEVELOPMENT: reduced from 60 for testing)
+const initialTime = 15; // seconds (DEVELOPMENT: reduced from 60 for testing)
 const timeLeft = ref(initialTime);
 let timer = null;
 let quizExpiryTime = null; // Backend expiry time
@@ -78,7 +77,9 @@ async function handleQuizEnd() {
 const sentences = ref([]);
 const chars = ref([]); // flat array of all characters (including punctuation)
 const zhuyinArr = ref([]); // aligned array of zhuyin reps for each char
-const userInput = ref("");
+const userInput = ref(""); // Raw keystrokes
+const displayInput = computed(() => keystrokesToZhuyin(userInput.value)); // Zhuyin display
+const inputFocused = ref(false); // Track if input is focused
 const startedQuestions = ref({}); // questionId: true if started
 const incorrectChars = ref({}); // Track incorrect character indices
 const zhuyin_keymap = {
@@ -154,9 +155,9 @@ async function fetchSentences() {
     console.log("generateSentences payload:", payload);
 
     // TEMPORARY: Use hardcoded sentences for development instead of LLM
-    const response = ["你好嗎？", "我很好。", "謝謝你。"];
+    // const response = ["你好嗎？", "我很好。", "謝謝你。"];
     // Uncomment below to use real LLM:
-    // const response = await generateSentences(payload);
+    const response = await generateSentences(payload);
     console.log("generateSentences response:", response);
 
     if (response) {
@@ -356,15 +357,30 @@ function startTimerWithExpiry() {
             />
           </template>
         </div>
-        <input
-          class="input-box"
-          v-model="userInput"
-          type="text"
-          placeholder="Type here..."
-          autocomplete="off"
-          spellcheck="false"
-          @keydown="handleInputKeydown"
-        />
+        <div class="input-wrapper">
+          <input
+            class="input-box hidden-input"
+            v-model="userInput"
+            type="text"
+            placeholder=""
+            autocomplete="off"
+            spellcheck="false"
+            @keydown="handleInputKeydown"
+            @focus="inputFocused = true"
+            @blur="inputFocused = false"
+          />
+          <div
+            class="input-display"
+            :class="{
+              placeholder: !displayInput,
+              focused: inputFocused,
+              'cursor-left': !displayInput && inputFocused,
+              'cursor-end': displayInput && inputFocused,
+            }"
+          >
+            {{ displayInput || "Start Typing..." }}
+          </div>
+        </div>
         <div class="keyboard-box">
           <img
             class="keyboard-bg"
@@ -379,8 +395,11 @@ function startTimerWithExpiry() {
 
 <style scoped>
 .practice-page {
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 150px);
   padding: 2rem 1rem;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
 }
 
 .practice-container {
@@ -391,6 +410,9 @@ function startTimerWithExpiry() {
   backdrop-filter: blur(10px);
   border-radius: 16px;
   border: 2px solid rgba(255, 255, 255, 0.2);
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
 }
 
 h1 {
@@ -462,22 +484,88 @@ h1 {
   color: #fc9e4f;
 }
 
-.input-box {
+.input-wrapper {
+  position: relative;
   width: 20vw;
   min-width: 220px;
   max-width: 500px;
+  margin-bottom: 2rem;
+}
+
+.input-box {
+  width: 100%;
   min-height: 36px;
   background: rgba(255, 255, 255, 0.13);
-  color: #fff;
+  color: transparent;
+  caret-color: transparent;
   border-radius: 7px;
   padding: 0.7rem 1.2rem;
   font-size: 1.2rem;
-  margin-bottom: 1.2rem;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   text-align: left;
   box-sizing: border-box;
   border: none;
   outline: none;
+}
+
+.hidden-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.input-display {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 36px;
+  padding: 0.7rem 1.2rem;
+  font-size: 1.2rem;
+  color: #fff;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* Cursor at left (before text) */
+.input-display.cursor-left::before {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #fff;
+  margin-right: 2px;
+  animation: blink 1s infinite;
+}
+
+/* Cursor at end (after text) */
+.input-display.cursor-end::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background-color: #fff;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+.input-display.placeholder {
+  color: rgba(200, 200, 200, 0.4);
+}
+
+@keyframes blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
 }
 
 .keyboard-box {
@@ -489,7 +577,7 @@ h1 {
   border-radius: 8px;
   position: relative;
   overflow: hidden;
-  margin-top: 1.2rem;
+  margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
