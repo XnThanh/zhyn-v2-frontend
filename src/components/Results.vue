@@ -1,34 +1,40 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { useRouter, useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 const router = useRouter();
-const route = useRoute();
 
-// Get quiz stats from route params
+// Get quiz stats from history state
 const stats = ref(null);
 
 onMounted(() => {
   // Stats passed via router state
-  if (route.params.stats) {
-    stats.value = route.params.stats;
+  if (window.history.state && window.history.state.stats) {
+    stats.value = window.history.state.stats;
+    console.log("Loaded stats from history state:", stats.value);
+  } else {
+    console.warn("No stats found in history state");
   }
 });
 
-// Format time as mm:ss
-const formattedTime = computed(() => {
-  if (!stats.value || !stats.value.totalTime) return "00:00";
-  const seconds = Math.floor(stats.value.totalTime / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const secs = seconds % 60;
-  return `${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+// Format speed as mm:ss (avgSpeed is in milliseconds)
+const formattedAvgSpeed = computed(() => {
+  if (!stats.value || !stats.value.avgSpeed) return "N/A";
+  const ms = stats.value.avgSpeed;
+  const seconds = Math.floor(ms / 1000);
+  const millis = Math.floor(ms % 1000);
+  return `${seconds}.${String(millis).padStart(3, "0")}s`;
 });
 
 const accuracy = computed(() => {
-  if (!stats.value) return 0;
-  const { correctAnswers = 0, totalQuestions = 0 } = stats.value;
-  if (totalQuestions === 0) return 0;
-  return Math.round((correctAnswers / totalQuestions) * 100);
+  if (!stats.value || stats.value.avgAccuracy == null) return 0;
+  // avgAccuracy is a decimal (e.g., 0.3333 = 33.33%)
+  return Math.round(stats.value.avgAccuracy * 100);
+});
+
+const errorCount = computed(() => {
+  if (!stats.value || !stats.value.incorrectRecords) return 0;
+  return stats.value.incorrectRecords.length;
 });
 
 function goHome() {
@@ -47,8 +53,8 @@ function retry() {
 
       <div v-if="stats" class="stats-grid">
         <div class="stat-card">
-          <div class="stat-label">Time</div>
-          <div class="stat-value">{{ formattedTime }}</div>
+          <div class="stat-label">Avg Speed</div>
+          <div class="stat-value">{{ formattedAvgSpeed }}</div>
         </div>
 
         <div class="stat-card">
@@ -57,23 +63,39 @@ function retry() {
         </div>
 
         <div class="stat-card">
-          <div class="stat-label">Correct</div>
-          <div class="stat-value">{{ stats.correctAnswers || 0 }}</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-label">Total</div>
-          <div class="stat-value">{{ stats.totalQuestions || 0 }}</div>
-        </div>
-
-        <div class="stat-card">
-          <div class="stat-label">WPM</div>
-          <div class="stat-value">{{ stats.wpm || 0 }}</div>
-        </div>
-
-        <div class="stat-card">
           <div class="stat-label">Errors</div>
-          <div class="stat-value">{{ stats.errors || 0 }}</div>
+          <div class="stat-value">{{ errorCount }}</div>
+        </div>
+      </div>
+
+      <!-- Incorrect Records Section -->
+      <div
+        v-if="
+          stats && stats.incorrectRecords && stats.incorrectRecords.length > 0
+        "
+        class="errors-section"
+      >
+        <h2>Mistakes to Review</h2>
+        <div class="error-list">
+          <div
+            v-for="(record, idx) in stats.incorrectRecords"
+            :key="idx"
+            class="error-item"
+          >
+            <div class="character">{{ record.character }}</div>
+            <div class="responses">
+              <div class="response-row">
+                <span class="label incorrect">Your answer:</span>
+                <span class="zhuyin incorrect">{{
+                  record.response || "(no input)"
+                }}</span>
+              </div>
+              <div class="response-row">
+                <span class="label correct">Correct:</span>
+                <span class="zhuyin correct">{{ record.target }}</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -153,6 +175,94 @@ h1 {
   padding: 2rem;
   color: rgba(255, 255, 255, 0.6);
   font-size: 1.2rem;
+}
+
+.errors-section {
+  margin: 2rem 0 3rem;
+  text-align: left;
+}
+
+.errors-section h2 {
+  color: #fc9e4f;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.error-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 0.5rem;
+}
+
+.error-item {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.error-item .character {
+  font-size: 2.5rem;
+  color: #fff;
+  font-weight: bold;
+  min-width: 60px;
+  text-align: center;
+  background: rgba(192, 132, 151, 0.2);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+.error-item .responses {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.response-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.response-row .label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 120px;
+  font-weight: 500;
+}
+
+.response-row .label.incorrect {
+  color: #fc9e4f;
+}
+
+.response-row .label.correct {
+  color: #9dbbae;
+}
+
+.response-row .zhuyin {
+  font-size: 1.3rem;
+  font-weight: 600;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+}
+
+.response-row .zhuyin.incorrect {
+  color: #fc9e4f;
+  background: rgba(252, 158, 79, 0.1);
+}
+
+.response-row .zhuyin.correct {
+  color: #9dbbae;
+  background: rgba(157, 187, 174, 0.1);
 }
 
 .actions {

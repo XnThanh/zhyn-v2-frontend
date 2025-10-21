@@ -62,10 +62,10 @@ async function handleQuizEnd() {
     const stats = await endQuiz({ quizId: quizId.value });
     console.log("Quiz stats:", stats);
 
-    // Navigate to results page with stats
+    // Navigate to results page with stats using state (not params)
     router.push({
       name: "Results",
-      params: { stats },
+      state: { stats },
     });
   } catch (err) {
     console.error("Failed to end quiz:", err);
@@ -123,6 +123,10 @@ const zhuyin_keymap = {
   "/": "ㄥ",
   "-": "ㄦ",
   "'": "、",
+  "`": "`",
+  "?": "?",
+  "!": "!",
+  "。": "。",
 };
 const loading = ref(true);
 const error = ref(null);
@@ -218,6 +222,10 @@ async function fetchSentences() {
   }
 }
 function keystrokesToZhuyin(str) {
+  // Handle special combinations first
+  // Backtick + period should map to Chinese period
+  str = str.replace(/`\./g, "。");
+
   // Map each character in the string to zhuyin using the keymap
   return str
     .split("")
@@ -279,6 +287,9 @@ async function handleInputKeydown(e) {
   if (e.key === "Enter") {
     e.preventDefault();
     const answerZhuyin = keystrokesToZhuyin(userInput.value);
+    console.log("User input:", userInput.value);
+    console.log("Converted to zhuyin:", answerZhuyin);
+    console.log("Expected zhuyin:", zhuyinArr.value[idx]);
     try {
       const submitRes = await submitAnswer({
         quizId: quizId.value,
