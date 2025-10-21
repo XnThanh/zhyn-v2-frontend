@@ -1,6 +1,30 @@
 # zhyn-v2-frontend
 
-A Vue.js 3 application built with Vite.
+## User Journey
+
+**Problem**: User is an advanced Mandarin foreign language learner. User learned Mandarin in the States but is now studying at a Mandarin Training Center in Taiwan. User would like to switch to using Zhuyin input method, as it is the standard in Taiwan.
+
+**Context**: User is not used to typing Zhuyin, they take a long time to type each word. The user wants to improve speed through typing practice.
+
+**Goal**: The user wants practice typing Zhuyin and receive immediate feedback on whether they typed correctly or not.
+
+**Specific actions:**
+
+**Action 1: User selects "intermediate" level**
+
+User is brought to a Typing Page.
+
+Timer starts for 1 minute (10 second used for development/testing purposes)
+
+**Action 2: User starts typing the characters they see on screen**
+
+User receives feedback when they type incorrectly (character is highlighted red)
+
+**Action 3: Timer runs out**
+
+User is brought to Results Page, telling them their speed, accuracy, and a list of inccorectly types characters, and what the correct Zhuyn representation is
+
+**Outcome**: User was able to practice typing Chinese characters suitable to their level, and receives feedback and metrics on their typing performance. User can repeat this typing practice to drill their typing skills.
 
 ## Development
 
@@ -17,35 +41,3 @@ npm run build
 # Preview production build
 npm run preview
 ```
-
-## Tech Stack
-
-- Vue 3 with `<script setup>` SFCs
-- Vite for fast development and optimized builds
-
-## API Integration
-
-This frontend calls a backend API. By default, API requests are sent to `/api` and Vite is configured to proxy them during development to `http://localhost:8000`.
-
-- Dev proxy: see `vite.config.js` (the `/api` path is proxied to `http://localhost:8000`).
-- Runtime base URL: can be overridden via env var `VITE_API_BASE_URL`.
-
-Example `.env.local` (optional):
-
-```
-VITE_API_BASE_URL=http://localhost:8000/api
-```
-
-### Available client functions
-
-Located under `src/api/`:
-
-- `zhuyinDictionary.js`: `register`, `unregister`, `getAnswer`, `lookupZhuyin`
-- `quiz.js`: `makeQuiz`, `endQuiz`, `registerQuestion`, `startQuestion`, `submitAnswer`
-- `levelMap.js`: `createLevel`, `addCharacter`, `removeCharacter`, `generateSentences`
-
-Each function performs a JSON POST matching the API spec. Errors from `{ error: string }` responses are thrown as `Error` with the message.
-
-### Manual testing
-
-Open the app and use the “API Playground” section rendered by `src/components/ApiPlayground.vue`. It provides simple forms to call each endpoint and shows the raw JSON response or error.
