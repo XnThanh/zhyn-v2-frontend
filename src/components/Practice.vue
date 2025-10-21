@@ -80,6 +80,7 @@ const chars = ref([]); // flat array of all characters (including punctuation)
 const zhuyinArr = ref([]); // aligned array of zhuyin reps for each char
 const userInput = ref("");
 const startedQuestions = ref({}); // questionId: true if started
+const incorrectChars = ref({}); // Track incorrect character indices
 const zhuyin_keymap = {
   1: "ㄅ",
   q: "ㄆ",
@@ -297,6 +298,12 @@ async function handleInputKeydown(e) {
         response: answerZhuyin,
       });
       console.log("submitAnswer result for", qid, ":", submitRes);
+
+      // Check if answer was incorrect
+      if (answerZhuyin !== zhuyinArr.value[idx]) {
+        incorrectChars.value[idx] = true;
+      }
+
       // Advance to next character
       userInput.value = "";
       if (currentCharIdx.value < chars.value.length - 1) {
@@ -342,7 +349,10 @@ function startTimerWithExpiry() {
               v-for="(char, idx) in chars"
               :key="idx"
               :char="char"
-              :class="{ current: idx === currentCharIdx }"
+              :class="{
+                current: idx === currentCharIdx,
+                incorrect: incorrectChars[idx],
+              }"
             />
           </template>
         </div>
@@ -511,5 +521,9 @@ h1 {
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(252, 158, 79, 0.15);
   font-weight: bold;
+}
+
+.char-display.incorrect {
+  color: var(--color-tertiary, #c08497);
 }
 </style>
