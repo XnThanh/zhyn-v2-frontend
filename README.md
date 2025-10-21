@@ -1,6 +1,6 @@
 # zhyn-v2-frontend
 
-[Check-in Screen Recording](checkin.mp4)
+[Check-in Screen Recording](https://drive.google.com/file/d/1lJWwhI7vLUYm9qT0l8fvsAXjUKe-_R2g/view?usp=sharing)
 
 ## User Journey
 
