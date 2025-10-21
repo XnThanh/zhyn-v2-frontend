@@ -356,17 +356,12 @@ function startTimerWithExpiry() {
           @keydown="handleInputKeydown"
         />
         <div class="keyboard-box">
-          <span>Keyboard display</span>
+          <img
+            class="keyboard-bg"
+            src="../assets/keyboard-blank.jpg"
+            alt="Zhuyin Keyboard Layout"
+          />
         </div>
-      </div>
-      <div class="practice-footer">
-        <h1>Practice Mode</h1>
-        <p class="level-info" v-if="selectedLevel">
-          Level: <strong>{{ selectedLevel }}</strong>
-        </p>
-        <p class="topic-info" v-if="selectedTopic">
-          Topic: <strong>{{ selectedTopic }}</strong>
-        </p>
       </div>
     </div>
   </div>
@@ -411,7 +406,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2.2rem;
+  gap: 0rem;
   /* margin-top: 1rem; */
 }
 
@@ -424,7 +419,7 @@ h1 {
 
 .word-box {
   width: 50vw;
-  height: 33vh;
+  height: 25vh;
   min-width: 320px;
   min-height: 120px;
   max-width: 700px;
@@ -439,7 +434,7 @@ h1 {
   align-items: flex-start;
   align-content: flex-start;
   overflow: hidden;
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   box-sizing: border-box;
 }
@@ -458,7 +453,7 @@ h1 {
 }
 
 .input-box {
-  width: 40vw;
+  width: 20vw;
   min-width: 220px;
   max-width: 500px;
   min-height: 36px;
@@ -476,22 +471,31 @@ h1 {
 }
 
 .keyboard-box {
-  width: 50vw;
-  height: 25vh;
-  /* min-width: 340px;
-  max-width: 800px;
-  min-height: 60px; */
-  background: #e0e0e0;
+  width: 90%;
+  max-width: 900px;
+  aspect-ratio: 3.5 / 1;
+  /* Maintains proportional scaling */
   color: #888;
   border-radius: 8px;
-  padding: 1.3rem 2.5rem;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  overflow: hidden;
   margin-top: 1.2rem;
+  margin-left: auto;
+  margin-right: auto;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   box-sizing: border-box;
+  padding: 0;
+}
+
+.keyboard-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .practice-footer {
