@@ -1,5 +1,7 @@
 # zhyn-v2-frontend
 
+[Check-in Screen Recording](checkin.mp4)
+
 ## User Journey
 
 **Problem**: User is an advanced Mandarin foreign language learner. User learned Mandarin in the States but is now studying at a Mandarin Training Center in Taiwan. User would like to switch to using Zhuyin input method, as it is the standard in Taiwan.
