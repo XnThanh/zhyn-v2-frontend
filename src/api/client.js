@@ -1,7 +1,7 @@
 // Lightweight API client for JSON POST requests
 // Base URL is configurable via VITE_API_BASE_URL; defaults to '/api' for dev proxy
 
-const DEFAULT_BASE_URL = "/api";
+const DEFAULT_BASE_URL = import.meta.env.VITE_API_BASE_URL || "/api";
 
 let baseURL =
   typeof import.meta !== "undefined" &&
