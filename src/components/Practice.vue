@@ -139,6 +139,16 @@ const error = ref(null);
 const keyHighlighting = ref(true);
 // Toggle for showing QWERTY legends
 const showQwerty = ref(true);
+// Toggle for showing/hiding the keyboard
+const showKeyboard = ref(true);
+
+// When keyboard is turned on, default to QWERTY + Key Helper on
+watch(showKeyboard, (val) => {
+  if (val) {
+    showQwerty.value = true;
+    keyHighlighting.value = true;
+  }
+});
 
 // Compute the next Zhuyin symbol to highlight based on current char and typed zhuyin
 // Optionally consider the next raw character to suppress space before punctuation
@@ -429,6 +439,13 @@ function startTimerWithExpiry() {
       <div class="practice-main">
         <div class="toolbar">
           <div class="toggle-group">
+            <span class="switch-text">Keyboard</span>
+            <label class="switch">
+              <input type="checkbox" v-model="showKeyboard" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="toggle-group">
             <span class="switch-text">QWERTY</span>
             <label class="switch">
               <input type="checkbox" v-model="showQwerty" />
@@ -483,7 +500,7 @@ function startTimerWithExpiry() {
             {{ displayInput || "Start Typing..." }}
           </div>
         </div>
-        <div class="keyboard-box">
+        <div class="keyboard-box" v-if="showKeyboard">
           <Keyboard
             :key-highlighting="keyHighlighting"
             :active-zhuyin="activeZhuyin"
