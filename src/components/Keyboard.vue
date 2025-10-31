@@ -258,7 +258,9 @@ defineProps({
         keyboardChar="'"
         >、</Key
       >
-      <Key size="enter">⏎</Key>
+      <Key size="enter" :active="keyHighlighting && activeZhuyin === 'ENTER'"
+        >⏎</Key
+      >
     </div>
 
     <!-- Third Letter Row (ZXCVBN) -->

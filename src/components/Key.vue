@@ -133,7 +133,6 @@ defineProps({
 
 .key-active {
   background: rgba(var(--key-color-rgb), 0.4);
-  /* background: color-mix(in srgb, var(--color-primary), transparent 60%); */
   border-color: var(--key-color);
   box-shadow: none;
   animation: keyPulse 1.2s ease-in-out infinite;

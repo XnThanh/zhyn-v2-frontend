@@ -203,11 +203,16 @@ const activeZhuyin = computed(() => {
   const expected = zhuyinArr.value?.[idx] || "";
   const nextChar = chars.value?.[idx + 1] || "";
   const steps = buildHighlightSteps(expected, nextChar);
-  const nextIdx = Math.min(userInput.value.length, steps.length - 1);
-  if (steps.length === 0 || nextIdx < 0) return "";
-  // If user has already completed all steps, clear highlight
-  if (userInput.value.length >= steps.length) return "";
-  return steps[nextIdx];
+  const typed = userInput.value.length;
+  // No steps => no highlight
+  if (steps.length === 0) return "";
+  // If user hasn't completed the required symbols, highlight the next needed symbol
+  if (typed < steps.length) {
+    const nextIdx = Math.max(0, Math.min(typed, steps.length - 1));
+    return steps[nextIdx];
+  }
+  // Otherwise, required symbols have been typed; keep highlighting Enter
+  return "ENTER";
 });
 
 // Fetch sentences from backend
