@@ -464,20 +464,24 @@ function startTimerWithExpiry() {
                 <span class="slider"></span>
               </label>
             </div>
-            <div class="toggle-group">
-              <span class="switch-text">QWERTY</span>
-              <label class="switch">
-                <input type="checkbox" v-model="showQwerty" />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <div class="toggle-group">
-              <span class="switch-text">Key Helper</span>
-              <label class="switch">
-                <input type="checkbox" v-model="keyHighlighting" />
-                <span class="slider"></span>
-              </label>
-            </div>
+            <transition name="slide-down">
+              <div v-if="showKeyboard" class="sub-toggles">
+                <div class="toggle-group">
+                  <span class="switch-text">QWERTY</span>
+                  <label class="switch">
+                    <input type="checkbox" v-model="showQwerty" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <div class="toggle-group">
+                  <span class="switch-text">Key Helper</span>
+                  <label class="switch">
+                    <input type="checkbox" v-model="keyHighlighting" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </div>
+            </transition>
           </div>
         </div>
         <div class="input-wrapper">
@@ -581,6 +585,30 @@ h1 {
   gap: 10px;
   align-items: flex-end;
   padding-left: 2rem;
+}
+
+.sub-toggles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+/* Slide-down transition */
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: all 0.3s ease;
+  transform-origin: top;
+}
+
+.slide-down-enter-from {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 .toggle-group {
