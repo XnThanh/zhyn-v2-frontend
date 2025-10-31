@@ -5,6 +5,7 @@ import Key from "./Key.vue";
 defineProps({
   keyHighlighting: { type: Boolean, default: false },
   activeZhuyin: { type: String, default: "" },
+  showQwerty: { type: Boolean, default: true },
 });
 </script>
 
@@ -15,6 +16,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === '`'"
         keyboardChar="`"
         >`</Key
@@ -22,6 +24,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄅ'"
         keyboardChar="1"
         >ㄅ</Key
@@ -29,6 +32,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄉ'"
         keyboardChar="2"
         >ㄉ</Key
@@ -36,6 +40,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ˇ'"
         keyboardChar="3"
         >ˇ</Key
@@ -43,6 +48,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ˋ'"
         keyboardChar="4"
         >ˋ</Key
@@ -50,6 +56,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄓ'"
         keyboardChar="5"
         >ㄓ</Key
@@ -57,6 +64,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ˊ'"
         keyboardChar="6"
         >ˊ</Key
@@ -64,6 +72,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === '˙'"
         keyboardChar="7"
         >˙</Key
@@ -71,6 +80,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄚ'"
         keyboardChar="8"
         >ㄚ</Key
@@ -78,6 +88,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄞ'"
         keyboardChar="9"
         >ㄞ</Key
@@ -85,6 +96,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄢ'"
         keyboardChar="0"
         >ㄢ</Key
@@ -92,6 +104,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄦ'"
         keyboardChar="-"
         >ㄦ</Key
@@ -106,6 +119,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄆ'"
         keyboardChar="Q"
         >ㄆ</Key
@@ -113,6 +127,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄊ'"
         keyboardChar="W"
         >ㄊ</Key
@@ -120,6 +135,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄍ'"
         keyboardChar="E"
         >ㄍ</Key
@@ -127,6 +143,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄐ'"
         keyboardChar="R"
         >ㄐ</Key
@@ -134,6 +151,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄔ'"
         keyboardChar="T"
         >ㄔ</Key
@@ -141,6 +159,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄗ'"
         keyboardChar="Y"
         >ㄗ</Key
@@ -148,6 +167,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄧ'"
         keyboardChar="U"
         >ㄧ</Key
@@ -155,6 +175,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄛ'"
         keyboardChar="I"
         >ㄛ</Key
@@ -162,6 +183,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄟ'"
         keyboardChar="O"
         >ㄟ</Key
@@ -169,6 +191,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄣ'"
         keyboardChar="P"
         >ㄣ</Key
@@ -184,6 +207,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄇ'"
         keyboardChar="A"
         >ㄇ</Key
@@ -191,6 +215,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄋ'"
         keyboardChar="S"
         >ㄋ</Key
@@ -198,6 +223,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄎ'"
         keyboardChar="D"
         >ㄎ</Key
@@ -205,6 +231,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄑ'"
         keyboardChar="F"
         >ㄑ</Key
@@ -212,6 +239,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄕ'"
         keyboardChar="G"
         >ㄕ</Key
@@ -219,6 +247,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄘ'"
         keyboardChar="H"
         >ㄘ</Key
@@ -226,6 +255,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄨ'"
         keyboardChar="J"
         >ㄨ</Key
@@ -233,6 +263,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄜ'"
         keyboardChar="K"
         >ㄜ</Key
@@ -240,6 +271,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄠ'"
         keyboardChar="L"
         >ㄠ</Key
@@ -247,6 +279,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄤ'"
         keyboardChar=";"
         >ㄤ</Key
@@ -254,6 +287,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === '、'"
         keyboardChar="'"
         >、</Key
@@ -269,6 +303,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄈ'"
         keyboardChar="Z"
         >ㄈ</Key
@@ -276,6 +311,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄌ'"
         keyboardChar="X"
         >ㄌ</Key
@@ -283,6 +319,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄏ'"
         keyboardChar="C"
         >ㄏ</Key
@@ -290,6 +327,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄒ'"
         keyboardChar="V"
         >ㄒ</Key
@@ -297,6 +335,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄖ'"
         keyboardChar="B"
         >ㄖ</Key
@@ -304,6 +343,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄙ'"
         keyboardChar="N"
         >ㄙ</Key
@@ -311,6 +351,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="keyHighlighting && activeZhuyin === 'ㄩ'"
         keyboardChar="M"
         >ㄩ</Key
@@ -318,13 +359,17 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
-        :active="keyHighlighting && activeZhuyin === 'ㄝ'"
+        :show-qwerty="showQwerty"
+        :active="
+          keyHighlighting && (activeZhuyin === 'ㄝ' || activeZhuyin === ',')
+        "
         keyboardChar=","
         >ㄝ</Key
       >
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="
           keyHighlighting && (activeZhuyin === 'ㄡ' || activeZhuyin === '.')
         "
@@ -334,6 +379,7 @@ defineProps({
       <Key
         size="normal"
         :isZhuyin="true"
+        :show-qwerty="showQwerty"
         :active="
           keyHighlighting && (activeZhuyin === 'ㄥ' || activeZhuyin === '?')
         "

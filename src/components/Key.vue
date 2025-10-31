@@ -18,6 +18,10 @@ defineProps({
     type: Boolean,
     default: false, // highlight state
   },
+  showQwerty: {
+    type: Boolean,
+    default: true, // when false, hide keyboardChar and center Zhuyin symbol
+  },
 });
 </script>
 
@@ -26,8 +30,15 @@ defineProps({
     class="key"
     :class="[`key-${size}`, { 'key-zhuyin': isZhuyin, 'key-active': active }]"
   >
-    <span v-if="keyboardChar" class="keyboard-char">{{ keyboardChar }}</span>
-    <span :class="{ 'zhuyin-symbol': isZhuyin }">
+    <span v-if="keyboardChar && showQwerty" class="keyboard-char">{{
+      keyboardChar
+    }}</span>
+    <span
+      :class="{
+        'zhuyin-symbol': isZhuyin,
+        'zhuyin-centered': isZhuyin && !showQwerty,
+      }"
+    >
       <slot></slot>
     </span>
   </div>
@@ -73,6 +84,12 @@ defineProps({
   top: 3px;
   left: 3px;
   font-size: 1.1rem;
+}
+
+/* Center Zhuyin when QWERTY legends are hidden */
+.zhuyin-centered {
+  top: 0;
+  left: 0;
 }
 
 /* When active, make the Zhuyin symbol brighter (towards white) to pop more */

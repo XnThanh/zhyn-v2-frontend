@@ -137,6 +137,8 @@ const error = ref(null);
 
 // Toggle for keyboard highlighting feature
 const keyHighlighting = ref(true);
+// Toggle for showing QWERTY legends
+const showQwerty = ref(true);
 
 // Compute the next Zhuyin symbol to highlight based on current char and typed zhuyin
 // Optionally consider the next raw character to suppress space before punctuation
@@ -426,11 +428,20 @@ function startTimerWithExpiry() {
       <!-- Main content above -->
       <div class="practice-main">
         <div class="toolbar">
-          <span class="switch-text">Key Helper</span>
-          <label class="switch">
-            <input type="checkbox" v-model="keyHighlighting" />
-            <span class="slider"></span>
-          </label>
+          <div class="toggle-group">
+            <span class="switch-text">QWERTY</span>
+            <label class="switch">
+              <input type="checkbox" v-model="showQwerty" />
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="toggle-group">
+            <span class="switch-text">Key Helper</span>
+            <label class="switch">
+              <input type="checkbox" v-model="keyHighlighting" />
+              <span class="slider"></span>
+            </label>
+          </div>
         </div>
         <div class="timer">{{ formattedTime }}</div>
         <div class="word-box">
@@ -476,6 +487,7 @@ function startTimerWithExpiry() {
           <Keyboard
             :key-highlighting="keyHighlighting"
             :active-zhuyin="activeZhuyin"
+            :show-qwerty="showQwerty"
           />
         </div>
       </div>
@@ -537,6 +549,12 @@ h1 {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 0.5rem;
+}
+
+.toggle-group {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 14px;
 }
 
 /* Slider Toggle */
