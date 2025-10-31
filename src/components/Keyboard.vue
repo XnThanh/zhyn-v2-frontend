@@ -414,10 +414,6 @@ defineProps({
   flex-direction: column;
   gap: 3px;
   padding: 12px;
-  /* background: rgba(0, 10, 30, 0.6); */
-  /* backdrop-filter: blur(10px); */
-  /* border-radius: 12px; */
-  /* box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5), 0 0 30px rgba(var(--keyboard-color-rgb), 0.1); */
   border: none;
   max-width: calc(100vw - 2rem);
   width: fit-content;

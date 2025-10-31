@@ -437,44 +437,48 @@ function startTimerWithExpiry() {
     <div class="practice-container">
       <!-- Main content above -->
       <div class="practice-main">
-        <div class="toolbar">
-          <div class="toggle-group">
-            <span class="switch-text">Keyboard</span>
-            <label class="switch">
-              <input type="checkbox" v-model="showKeyboard" />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div class="toggle-group">
-            <span class="switch-text">QWERTY</span>
-            <label class="switch">
-              <input type="checkbox" v-model="showQwerty" />
-              <span class="slider"></span>
-            </label>
-          </div>
-          <div class="toggle-group">
-            <span class="switch-text">Key Helper</span>
-            <label class="switch">
-              <input type="checkbox" v-model="keyHighlighting" />
-              <span class="slider"></span>
-            </label>
-          </div>
-        </div>
         <div class="timer">{{ formattedTime }}</div>
-        <div class="word-box">
-          <span v-if="loading" class="loading-text">Loading sentences...</span>
-          <span v-else-if="error" class="error-text">{{ error }}</span>
-          <template v-else>
-            <CharDisplay
-              v-for="(char, idx) in chars"
-              :key="idx"
-              :char="char"
-              :class="{
-                current: idx === currentCharIdx,
-                incorrect: incorrectChars[idx],
-              }"
-            />
-          </template>
+        <div class="word-row">
+          <div class="word-box">
+            <span v-if="loading" class="loading-text"
+              >Loading sentences...</span
+            >
+            <span v-else-if="error" class="error-text">{{ error }}</span>
+            <template v-else>
+              <CharDisplay
+                v-for="(char, idx) in chars"
+                :key="idx"
+                :char="char"
+                :class="{
+                  current: idx === currentCharIdx,
+                  incorrect: incorrectChars[idx],
+                }"
+              />
+            </template>
+          </div>
+          <div class="toolbar">
+            <div class="toggle-group">
+              <span class="switch-text">Keyboard</span>
+              <label class="switch">
+                <input type="checkbox" v-model="showKeyboard" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="toggle-group">
+              <span class="switch-text">QWERTY</span>
+              <label class="switch">
+                <input type="checkbox" v-model="showQwerty" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="toggle-group">
+              <span class="switch-text">Key Helper</span>
+              <label class="switch">
+                <input type="checkbox" v-model="keyHighlighting" />
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
         </div>
         <div class="input-wrapper">
           <input
@@ -515,14 +519,10 @@ function startTimerWithExpiry() {
 <style scoped>
 .practice-page {
   min-height: calc(100vh - 150px);
-  padding: 2rem 1rem;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
 }
 
 .practice-container {
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 1rem;
   /* background: rgba(22, 25, 37, 0.85); */
@@ -557,21 +557,36 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0rem;
-  /* margin-top: 1rem; */
+  /* gap: 1rem; */
+}
+
+.word-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
+
+.word-box {
+  grid-column: 2;
+  justify-self: center;
+  flex-shrink: 0;
 }
 
 .toolbar {
-  width: 100%;
+  grid-column: 3;
   display: flex;
-  justify-content: flex-end;
-  margin-bottom: 0.5rem;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  padding-left: 2rem;
 }
 
 .toggle-group {
   display: inline-flex;
   align-items: center;
-  margin-left: 14px;
+  justify-content: flex-end; /* keep text + slider anchored to the right */
 }
 
 /* Slider Toggle */
@@ -763,19 +778,15 @@ h1 {
 }
 
 .keyboard-box {
-  width: 100%;
-  display: flex;
+  display: inline-flex;
   justify-content: center;
-  margin-top: 2rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .practice-footer {
   width: 100%;
   text-align: center;
   margin-top: 3.5rem;
-  padding-bottom: 1.5rem;
+  /* padding-bottom: 1.5rem; */
 }
 
 .char-display.current {
