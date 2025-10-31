@@ -5,6 +5,7 @@ import { getSelectedLevel, getSelectedTopic } from "../composables/useLevel";
 import { generateSentences } from "../api/levelMap";
 import { getAnswer } from "../api/zhuyinDictionary";
 import CharDisplay from "./CharDisplay.vue";
+import Keyboard from "./Keyboard.vue";
 import {
   makeQuiz,
   registerQuestion,
@@ -155,10 +156,10 @@ async function fetchSentences() {
     console.log("generateSentences payload:", payload);
 
     // TEMPORARY: Use hardcoded sentences for development instead of LLM
-    // const response = ["你好嗎？", "我很好。", "謝謝你。"];
+    const response = ["你好嗎？", "我很好。", "謝謝你。"];
     // Uncomment below to use real LLM:
-    const response = await generateSentences(payload);
-    console.log("generateSentences response:", response);
+    // const response = await generateSentences(payload);
+    // console.log("generateSentences response:", response);
 
     if (response) {
       sentences.value = Array.isArray(response)
@@ -382,11 +383,7 @@ function startTimerWithExpiry() {
           </div>
         </div>
         <div class="keyboard-box">
-          <img
-            class="keyboard-bg"
-            src="../assets/keyboard-blank.jpg"
-            alt="Zhuyin Keyboard Layout"
-          />
+          <Keyboard />
         </div>
       </div>
     </div>
@@ -406,10 +403,10 @@ function startTimerWithExpiry() {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
-  background: rgba(22, 25, 37, 0.85);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  /* background: rgba(22, 25, 37, 0.85); */
+  /* backdrop-filter: blur(10px); */
+  /* border-radius: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.2); */
   /* display: flex;
   flex-direction: column;
   align-items: center; */
@@ -569,31 +566,12 @@ h1 {
 }
 
 .keyboard-box {
-  width: 90%;
-  max-width: 900px;
-  aspect-ratio: 3.5 / 1;
-  /* Maintains proportional scaling */
-  color: #888;
-  border-radius: 8px;
-  position: relative;
-  overflow: hidden;
+  width: 100%;
+  display: flex;
+  justify-content: center;
   margin-top: 2rem;
   margin-left: auto;
   margin-right: auto;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  box-sizing: border-box;
-  padding: 0;
-}
-
-.keyboard-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  z-index: 0;
-  pointer-events: none;
 }
 
 .practice-footer {

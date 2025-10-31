@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue";
+import "./../style.css";
 
 const isMenuOpen = ref(false);
 
@@ -43,7 +44,9 @@ function closeMenu() {
         <router-link to="/playground" class="nav-link" @click="closeMenu"
           >Playground</router-link
         >
-        <a href="#" class="nav-link" @click="closeMenu">About</a>
+        <router-link to="/about" class="nav-link" @click="closeMenu"
+          >About</router-link
+        >
       </div>
     </div>
   </nav>
@@ -145,7 +148,7 @@ function closeMenu() {
   left: 50%;
   width: 0;
   height: 2px;
-  background: #fc9e4f;
+  background: var(--color-primary);
   transition: all 0.3s ease;
   transform: translateX(-50%);
 }
@@ -157,11 +160,11 @@ function closeMenu() {
 
 .nav-link:hover::after {
   width: 80%;
-  background: #fc9e4f;
+  background: var(--color-primary-light);
 }
 
 .nav-link.router-link-active {
-  background: rgba(252, 158, 79, 0.2);
+  background: color-mix(in srgb, var(--color-primary-light), transparent 80%);
 }
 
 .nav-link.router-link-active::after {

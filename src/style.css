@@ -4,11 +4,17 @@
   font-weight: 400;
 
   /* Custom color scheme */
-  --color-primary: #9dbbae;
+  /* --color-primary: #9dbbae;
   --color-secondary: #fc9e4f;
   --color-tertiary: #c08497;
   --color-gray: #5b5b5b;
-  --color-dark: #161925;
+  --color-dark: #161925; */
+  --color-primary: #77d4d8;
+  --color-primary-light: #a3cfd0;
+  --color-secondary: #cc3f0c;
+  --color-tertiary: #f49f0a;
+  --color-gray: #e9e9e9;
+  --color-dark: #0d1518;
 
   color-scheme: dark;
   color: rgba(255, 255, 255, 0.9);
@@ -35,7 +41,7 @@ body {
   place-items: center;
   min-width: 320px;
   height: 100vh;
-  background: linear-gradient(135deg, #9dbbae 0%, #fc9e4f 100%);
+  /* background: linear-gradient(135deg, black 0%, #9dbbae 150%); */
   background-attachment: fixed;
 }
 

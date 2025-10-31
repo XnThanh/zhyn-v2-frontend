@@ -4,6 +4,7 @@ import TopicSelect from "../components/TopicSelect.vue";
 import Practice from "../components/Practice.vue";
 import Results from "../components/Results.vue";
 import ApiPlayground from "../components/ApiPlayground.vue";
+import About from "../components/About.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
     path: "/playground",
     name: "Playground",
     component: ApiPlayground,
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: About,
   },
 ];
 
