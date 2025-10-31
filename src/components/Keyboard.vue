@@ -1,23 +1,101 @@
 <script setup>
 import Key from "./Key.vue";
+
+// Highlighting controls come from parent (Practice.vue)
+defineProps({
+  keyHighlighting: { type: Boolean, default: false },
+  activeZhuyin: { type: String, default: "" },
+});
 </script>
 
 <template>
   <div class="keyboard">
     <!-- Number Row -->
     <div class="keyboard-row">
-      <Key size="normal" :isZhuyin="true" keyboardChar="`">`</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="1">ㄅ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="2">ㄉ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="3">ˇ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="4">ˋ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="5">ㄓ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="6">ˊ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="7">˙</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="8">ㄚ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="9">ㄞ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="0">ㄢ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="-">ㄦ</Key>
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === '`'"
+        keyboardChar="`"
+        >`</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄅ'"
+        keyboardChar="1"
+        >ㄅ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄉ'"
+        keyboardChar="2"
+        >ㄉ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ˇ'"
+        keyboardChar="3"
+        >ˇ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ˋ'"
+        keyboardChar="4"
+        >ˋ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄓ'"
+        keyboardChar="5"
+        >ㄓ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ˊ'"
+        keyboardChar="6"
+        >ˊ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === '˙'"
+        keyboardChar="7"
+        >˙</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄚ'"
+        keyboardChar="8"
+        >ㄚ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄞ'"
+        keyboardChar="9"
+        >ㄞ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄢ'"
+        keyboardChar="0"
+        >ㄢ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄦ'"
+        keyboardChar="-"
+        >ㄦ</Key
+      >
       <Key size="normal" keyboardChar="="></Key>
       <Key size="backspace">⌫</Key>
     </div>
@@ -25,51 +103,241 @@ import Key from "./Key.vue";
     <!-- First Letter Row (QWERTY) -->
     <div class="keyboard-row">
       <Key size="tab">↹</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="Q">ㄆ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="W">ㄊ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="E">ㄍ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="R">ㄐ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="T">ㄔ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="Y">ㄗ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="U">ㄧ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="I">ㄛ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="O">ㄟ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="P">ㄣ</Key>
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄆ'"
+        keyboardChar="Q"
+        >ㄆ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄊ'"
+        keyboardChar="W"
+        >ㄊ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄍ'"
+        keyboardChar="E"
+        >ㄍ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄐ'"
+        keyboardChar="R"
+        >ㄐ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄔ'"
+        keyboardChar="T"
+        >ㄔ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄗ'"
+        keyboardChar="Y"
+        >ㄗ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄧ'"
+        keyboardChar="U"
+        >ㄧ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄛ'"
+        keyboardChar="I"
+        >ㄛ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄟ'"
+        keyboardChar="O"
+        >ㄟ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄣ'"
+        keyboardChar="P"
+        >ㄣ</Key
+      >
       <Key size="normal" keyboardChar="["></Key>
       <Key size="normal" keyboardChar="]"></Key>
-      <Key size="normal" keyboardChar="\"></Key>
+      <Key size="normal" keyboardChar="\\"></Key>
     </div>
 
     <!-- Second Letter Row (ASDFGH) -->
     <div class="keyboard-row">
       <Key size="caps">⇪</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="A">ㄇ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="S">ㄋ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="D">ㄎ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="F">ㄑ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="G">ㄕ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="H">ㄘ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="J">ㄨ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="K">ㄜ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="L">ㄠ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar=";">ㄤ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="'">、</Key>
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄇ'"
+        keyboardChar="A"
+        >ㄇ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄋ'"
+        keyboardChar="S"
+        >ㄋ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄎ'"
+        keyboardChar="D"
+        >ㄎ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄑ'"
+        keyboardChar="F"
+        >ㄑ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄕ'"
+        keyboardChar="G"
+        >ㄕ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄘ'"
+        keyboardChar="H"
+        >ㄘ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄨ'"
+        keyboardChar="J"
+        >ㄨ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄜ'"
+        keyboardChar="K"
+        >ㄜ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄠ'"
+        keyboardChar="L"
+        >ㄠ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄤ'"
+        keyboardChar=";"
+        >ㄤ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === '、'"
+        keyboardChar="'"
+        >、</Key
+      >
       <Key size="enter">⏎</Key>
     </div>
 
     <!-- Third Letter Row (ZXCVBN) -->
     <div class="keyboard-row">
       <Key size="shift-left">⇧</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="Z">ㄈ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="X">ㄌ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="C">ㄏ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="V">ㄒ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="B">ㄖ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="N">ㄙ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="M">ㄩ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar=",">ㄝ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar=".">ㄡ</Key>
-      <Key size="normal" :isZhuyin="true" keyboardChar="/">ㄥ</Key>
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄈ'"
+        keyboardChar="Z"
+        >ㄈ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄌ'"
+        keyboardChar="X"
+        >ㄌ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄏ'"
+        keyboardChar="C"
+        >ㄏ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄒ'"
+        keyboardChar="V"
+        >ㄒ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄖ'"
+        keyboardChar="B"
+        >ㄖ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄙ'"
+        keyboardChar="N"
+        >ㄙ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄩ'"
+        keyboardChar="M"
+        >ㄩ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="keyHighlighting && activeZhuyin === 'ㄝ'"
+        keyboardChar=","
+        >ㄝ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="
+          keyHighlighting && (activeZhuyin === 'ㄡ' || activeZhuyin === '.')
+        "
+        keyboardChar="."
+        >ㄡ</Key
+      >
+      <Key
+        size="normal"
+        :isZhuyin="true"
+        :active="
+          keyHighlighting && (activeZhuyin === 'ㄥ' || activeZhuyin === '?')
+        "
+        keyboardChar="/"
+        >ㄥ</Key
+      >
       <Key size="shift-right">⇧</Key>
     </div>
 
@@ -78,7 +346,10 @@ import Key from "./Key.vue";
       <Key size="ctrl"></Key>
       <Key size="win"></Key>
       <Key size="alt"></Key>
-      <Key size="space"></Key>
+      <Key
+        size="space"
+        :active="keyHighlighting && activeZhuyin === 'SPACE'"
+      ></Key>
       <Key size="alt"></Key>
       <Key size="win"></Key>
       <Key size="ctrl"></Key>

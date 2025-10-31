@@ -164,7 +164,7 @@ function closeMenu() {
 }
 
 .nav-link.router-link-active {
-  background: color-mix(in srgb, var(--color-primary-light), transparent 80%);
+  background: rgba(var(--color-primary-light), 0.1);
 }
 
 .nav-link.router-link-active::after {

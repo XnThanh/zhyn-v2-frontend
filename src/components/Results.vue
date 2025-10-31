@@ -42,7 +42,7 @@ function goHome() {
 }
 
 function retry() {
-  router.push("/topic");
+  router.push("/practice");
 }
 </script>
 

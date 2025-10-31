@@ -22,7 +22,7 @@ const selectedTopic = computed(() => getSelectedTopic());
 const currentCharIdx = ref(0); // index of the current character to type
 
 // Countdown timer
-const initialTime = 15; // seconds (DEVELOPMENT: reduced from 60 for testing)
+const initialTime = 20; // seconds (DEVELOPMENT: reduced from 60 for testing)
 const timeLeft = ref(initialTime);
 let timer = null;
 let quizExpiryTime = null; // Backend expiry time
@@ -128,11 +128,87 @@ const zhuyin_keymap = {
   "'": "、",
   "`": "`",
   "?": "?",
+  "？": "？",
   "!": "!",
   "。": "。",
 };
 const loading = ref(true);
 const error = ref(null);
+
+// Toggle for keyboard highlighting feature
+const keyHighlighting = ref(true);
+
+// Compute the next Zhuyin symbol to highlight based on current char and typed zhuyin
+// Optionally consider the next raw character to suppress space before punctuation
+// function buildHighlightSteps(expectedZhuyin, nextChar = "") {
+//   const steps = [];
+//   const s = (expectedZhuyin || "").toString();
+//   // Special composition: Chinese period and question mark
+//   if (s === "。") {
+//     steps.push("`", ".");
+//     return steps;
+//   }
+//   if (s === "？") {
+//     steps.push("`", "?");
+//     return steps;
+//   }
+//   // Default: each zhuyin symbol is one step
+//   for (const ch of s) steps.push(ch);
+//   // If there is no tone mark, require a space before submit
+//   const hasTone = /[ˇˋˊ˙]/.test(s);
+//   // Treat standalone punctuation as not requiring a space
+//   const isPunctuation = /^[、。？！?!.,;:'"`\-]$/.test(s);
+//   // Also, if the NEXT character is punctuation, do not ask for a space here
+//   const nextIsPunctuation = nextChar
+//     ? /[、。？！?!.,;:'"`\-]/.test(nextChar)
+//     : false;
+//   if (!hasTone && s.length > 0 && !isPunctuation && !nextIsPunctuation)
+//     steps.push("SPACE");
+//   return steps;
+// }
+
+function buildHighlightSteps(expectedZhuyin, nextChar = "") {
+  const steps = [];
+  const s = (expectedZhuyin || "").toString();
+
+  // Special composition: Chinese period and question mark
+  if (s === "。") {
+    steps.push("`", ".");
+    return steps;
+  }
+  if (s === "？") {
+    steps.push("`", "?");
+    return steps;
+  }
+
+  // Default: each zhuyin symbol is one step
+  for (const ch of s) steps.push(ch);
+
+  const hasTone = /[ˇˋˊ˙]/.test(s);
+  const isPunctuation = /^[、。？！？，．?!.,;:'"`\-]$/.test(s);
+  const nextIsPunctuation = nextChar
+    ? /[、。？！？，．?!.,;:'"`\-]/.test(nextChar)
+    : false;
+
+  // Only require space if no tone, not punctuation, and not followed by punctuation
+  if (!hasTone && s.length > 0 && !isPunctuation && !nextIsPunctuation)
+    steps.push("SPACE");
+
+  return steps;
+}
+
+const activeZhuyin = computed(() => {
+  if (!keyHighlighting.value) return "";
+  const idx = currentCharIdx.value;
+  const expected = zhuyinArr.value?.[idx] || "";
+  const nextChar = chars.value?.[idx + 1] || "";
+  const steps = buildHighlightSteps(expected, nextChar);
+  const nextIdx = Math.min(userInput.value.length, steps.length - 1);
+  if (steps.length === 0 || nextIdx < 0) return "";
+  // If user has already completed all steps, clear highlight
+  if (userInput.value.length >= steps.length) return "";
+  return steps[nextIdx];
+});
 
 // Fetch sentences from backend
 async function fetchSentences() {
@@ -156,7 +232,7 @@ async function fetchSentences() {
     console.log("generateSentences payload:", payload);
 
     // TEMPORARY: Use hardcoded sentences for development instead of LLM
-    const response = ["你好嗎？", "我很好。", "謝謝你。"];
+    const response = ["他好嗎？", "我很好。", "謝謝你。"];
     // Uncomment below to use real LLM:
     // const response = await generateSentences(payload);
     // console.log("generateSentences response:", response);
@@ -227,7 +303,9 @@ async function fetchSentences() {
 function keystrokesToZhuyin(str) {
   // Handle special combinations first
   // Backtick + period should map to Chinese period
-  str = str.replace(/`\./g, "。");
+  str = str.replace(/`\./g, "`.");
+  // // Backtick + question should map to Chinese question mark
+  // str = str.replace(/`\?/g, "？");
 
   // Map each character in the string to zhuyin using the keymap
   return str
@@ -342,6 +420,13 @@ function startTimerWithExpiry() {
     <div class="practice-container">
       <!-- Main content above -->
       <div class="practice-main">
+        <div class="toolbar">
+          <span class="switch-text">Key Helper</span>
+          <label class="switch">
+            <input type="checkbox" v-model="keyHighlighting" />
+            <span class="slider"></span>
+          </label>
+        </div>
         <div class="timer">{{ formattedTime }}</div>
         <div class="word-box">
           <span v-if="loading" class="loading-text">Loading sentences...</span>
@@ -383,7 +468,10 @@ function startTimerWithExpiry() {
           </div>
         </div>
         <div class="keyboard-box">
-          <Keyboard />
+          <Keyboard
+            :key-highlighting="keyHighlighting"
+            :active-zhuyin="activeZhuyin"
+          />
         </div>
       </div>
     </div>
@@ -439,9 +527,78 @@ h1 {
   /* margin-top: 1rem; */
 }
 
+.toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+/* Slider Toggle */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 26px;
+  margin-left: 10px; /* space between label text and slider */
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  transition: all 0.2s ease;
+  border-radius: 999px;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.35);
+}
+
+.slider:before {
+  content: "";
+  position: absolute;
+  height: 20px;
+  width: 20px;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #ffffff;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 8px rgba(119, 212, 219, 0.4), 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.switch input:checked + .slider {
+  background: rgba(119, 212, 219, 0.35);
+  border-color: #77d4db;
+  /* box-shadow: 0 0 12px rgba(119, 212, 219, 0.5); */
+}
+
+.switch input:checked + .slider:before {
+  left: calc(100% - 23px);
+  background: #77d4db;
+  box-shadow: 0 0 12px rgba(119, 212, 219, 0.85),
+    0 0 22px rgba(119, 212, 219, 0.5);
+}
+
+.switch-text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+  user-select: none;
+}
+
 .timer {
   font-size: 1.3rem;
-  color: #fc9e4f;
+  color: var(--color-primary);
   font-weight: bold;
   margin-bottom: 0.7rem;
 }
