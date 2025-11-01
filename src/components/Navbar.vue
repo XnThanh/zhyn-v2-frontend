@@ -41,12 +41,12 @@ function closeMenu() {
         <router-link to="/practice" class="nav-link" @click="closeMenu"
           >Practice</router-link
         >
-        <router-link to="/playground" class="nav-link" @click="closeMenu"
+        <!-- <router-link to="/playground" class="nav-link" @click="closeMenu"
           >Playground</router-link
-        >
-        <router-link to="/about" class="nav-link" @click="closeMenu"
+        > -->
+        <!-- <router-link to="/about" class="nav-link" @click="closeMenu"
           >About</router-link
-        >
+        > -->
       </div>
     </div>
   </nav>

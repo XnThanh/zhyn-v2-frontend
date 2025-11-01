@@ -522,7 +522,17 @@ function startTimerWithExpiry() {
 
 <style scoped>
 .practice-page {
-  min-height: calc(100vh - 150px);
+  /* height: calc(100vh - 150px); */
+  background: url("./../assets/taipei101-background-blur.png") no-repeat top
+    center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  height: 100vh;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: top center;
 }
 
 .practice-container {
@@ -562,20 +572,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   /* gap: 1rem; */
-}
-
-.word-row {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: flex-start;
-  width: 100%;
-  position: relative;
-}
-
-.word-box {
-  grid-column: 2;
-  justify-self: center;
-  flex-shrink: 0;
 }
 
 .toolbar {
@@ -693,9 +689,9 @@ h1 {
   min-height: 120px;
   max-width: 700px;
   max-height: 340px;
-  background: rgba(200, 200, 200, 0.18);
+  background: rgba(var(--color-primary-rgb), 0.2);
   color: #bdbdbd;
-  border-radius: 10px;
+  border-radius: 0;
   padding: 1.2rem 2rem;
   font-size: 1.7rem;
   display: flex;
@@ -704,9 +700,24 @@ h1 {
   align-content: flex-start;
   overflow: hidden;
   margin-bottom: 0.5rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.9),
+    0 0 20px rgba(var(--color-primary-rgb), 0.55),
+    inset 0 0 10px rgba(var(--color-primary-rgb), 0.3);
   box-sizing: border-box;
+  grid-column: 2;
+  justify-self: center;
+  flex-shrink: 0;
+  border: 2px solid var(--color-primary);
 }
+
+.word-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: flex-start;
+  width: 100%;
+  position: relative;
+}
+
 .word {
   margin: 0 0.5em;
 }
@@ -727,12 +738,17 @@ h1 {
   min-width: 220px;
   max-width: 500px;
   margin-bottom: 2rem;
+  border-radius: 0;
+  border: 2.5px solid var(--color-tertiary);
+  background: rgba(var(--color-tertiary-rgb), 0.12);
+  box-shadow: 0 0 16px 2px var(--color-tertiary),
+    0 0 32px 4px rgba(var(--color-tertiary-rgb), 0.25);
 }
 
 .input-box {
   width: 100%;
   min-height: 36px;
-  background: rgba(255, 255, 255, 0.13);
+  background: rgba(var(--color-primary-rgb), 0.13);
   color: transparent;
   caret-color: transparent;
   border-radius: 7px;
