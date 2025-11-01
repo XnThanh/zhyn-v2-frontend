@@ -22,7 +22,7 @@ const selectedTopic = computed(() => getSelectedTopic());
 const currentCharIdx = ref(0); // index of the current character to type
 
 // Countdown timer
-const initialTime = 20; // seconds (DEVELOPMENT: reduced from 60 for testing)
+const initialTime = 30; // seconds (DEVELOPMENT: reduced from 60 for testing)
 const timeLeft = ref(initialTime);
 let timer = null;
 let quizExpiryTime = null; // Backend expiry time
@@ -731,7 +731,7 @@ h1 {
 }
 
 .error-text {
-  color: #fc9e4f;
+  color: var(--color-secondary);
 }
 
 .input-wrapper {
@@ -839,7 +839,7 @@ h1 {
 }
 
 .char-display.current {
-  background: var(--color-secondary, #fc9e4f);
+  background: var(--color-primary-light);
   color: #fff;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(252, 158, 79, 0.15);
@@ -847,6 +847,6 @@ h1 {
 }
 
 .char-display.incorrect {
-  color: var(--color-tertiary, #c08497);
+  color: var(--color-secondary, var(--color-secondary));
 }
 </style>
