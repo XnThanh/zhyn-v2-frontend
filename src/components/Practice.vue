@@ -136,17 +136,17 @@ const loading = ref(true);
 const error = ref(null);
 
 // Toggle for keyboard highlighting feature
-const keyHighlighting = ref(true);
+const keyHighlighting = ref(false);
 // Toggle for showing QWERTY legends
-const showQwerty = ref(true);
+const showQwerty = ref(false);
 // Toggle for showing/hiding the keyboard
-const showKeyboard = ref(true);
+const showKeyboard = ref(false);
 
 // When keyboard is turned on, default to QWERTY + Key Helper on
 watch(showKeyboard, (val) => {
   if (val) {
-    showQwerty.value = true;
-    keyHighlighting.value = true;
+    showQwerty.value = false;
+    keyHighlighting.value = false;
   }
 });
 
@@ -739,7 +739,8 @@ h1 {
   max-width: 500px;
   margin-bottom: 2rem;
   border-radius: 0;
-  border: 2.5px solid var(--color-tertiary);
+  border: none;
+  border-bottom: 2.5px solid var(--color-tertiary);
   background: rgba(var(--color-tertiary-rgb), 0.12);
   box-shadow: 0 0 16px 2px var(--color-tertiary),
     0 0 32px 4px rgba(var(--color-tertiary-rgb), 0.25);

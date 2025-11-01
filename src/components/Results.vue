@@ -49,7 +49,7 @@ function retry() {
 <template>
   <div class="results-page">
     <div class="results-container">
-      <h1>Quiz Complete!</h1>
+      <h1>Game Complete</h1>
 
       <div v-if="stats" class="stats-grid">
         <div class="stat-card">
