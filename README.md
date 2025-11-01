@@ -1,5 +1,9 @@
 # zhyn-v2-frontend
 
+[Visual Design Study](https://docs.google.com/document/d/1ZxoyTlA74aABMCm9fvhcX2V_GBeJFdQzHHADG17pD7M/edit?usp=sharing)
+
+[Updated Screen Recording](https://drive.google.com/file/d/1IYHSitc9pZqgVwXiHkWtR5AgUifg8DoR/view?usp=sharing)
+
 [Check-in Screen Recording](https://drive.google.com/file/d/1lJWwhI7vLUYm9qT0l8fvsAXjUKe-_R2g/view?usp=sharing)
 
 ## User Journey
@@ -12,17 +16,21 @@
 
 **Specific actions:**
 
-**Action 1: User selects "intermediate" level**
+**Action 1: User selects "beginner" level**
+
+User is brought to a Select Topic Page.
+
+**Action 2: User selects "daily life" topic**
 
 User is brought to a Typing Page.
 
 Timer starts for 1 minute (10 second used for development/testing purposes)
 
-**Action 2: User starts typing the characters they see on screen**
+**Action 3: User starts typing the characters they see on screen**
 
 User receives feedback when they type incorrectly (character is highlighted red)
 
-**Action 3: Timer runs out**
+**Action 4: Timer runs out**
 
 User is brought to Results Page, telling them their speed, accuracy, and a list of inccorectly types characters, and what the correct Zhuyn representation is
 
