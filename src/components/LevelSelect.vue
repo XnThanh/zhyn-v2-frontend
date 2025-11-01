@@ -47,7 +47,7 @@ onUnmounted(() => {
 <template>
   <div class="level-select">
     <div class="level-select-container">
-      <h1 class="title">Choose Your Level</h1>
+      <h1 class="title">Select Level</h1>
 
       <div class="levels-list">
         <div

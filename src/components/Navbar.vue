@@ -135,6 +135,8 @@ function closeMenu() {
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
+  font-family: "Inconsolata", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
   padding: 0.5rem 1rem;
   border-radius: 4px;
   transition: all 0.3s ease;

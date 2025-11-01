@@ -48,6 +48,18 @@ export function getBaseURL() {
  */
 export async function post(path, body) {
   const url = joinURL(baseURL, path);
+  const isDev = typeof import.meta !== "undefined" && import.meta.env && import.meta.env.DEV;
+  const start = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
+
+  // Dev: log outgoing request
+  if (isDev) {
+    try {
+      console.debug("[API] → POST", url, {
+        bodyPreview: JSON.stringify(body)?.slice(0, 500),
+      });
+    } catch {}
+  }
+
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -63,18 +75,49 @@ export async function post(path, body) {
     data = text ? JSON.parse(text) : {};
   } catch (e) {
     // Not JSON
+    const duration = ((typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now()) - start;
+    console.error("[API] ✖ Parse error", {
+      url,
+      status: res.status,
+      durationMs: Math.round(duration),
+      responsePreview: text?.slice(0, 500),
+    });
     throw new Error(`Unexpected response format (${res.status}): ${text}`);
   }
 
   if (!res.ok) {
     const msg = data && data.error ? data.error : `HTTP ${res.status}`;
+    const duration = ((typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now()) - start;
+    console.error("[API] ✖ HTTP error", {
+      url,
+      status: res.status,
+      durationMs: Math.round(duration),
+      message: msg,
+      payloadPreview: (() => { try { return JSON.stringify(body)?.slice(0, 500); } catch { return undefined; } })(),
+      responsePreview: (() => { try { return JSON.stringify(data)?.slice(0, 500); } catch { return undefined; } })(),
+    });
     throw new Error(msg);
   }
 
   if (data && typeof data === "object" && "error" in data && data.error) {
+    const duration = ((typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now()) - start;
+    console.error("[API] ✖ API error", {
+      url,
+      status: res.status,
+      durationMs: Math.round(duration),
+      apiError: data.error,
+    });
     throw new Error(data.error);
   }
-
+  if (isDev) {
+    const duration = ((typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now()) - start;
+    try {
+      console.debug("[API] ✓", url, {
+        status: res.status,
+        durationMs: Math.round(duration),
+      });
+    } catch {}
+  }
   return /** @type {T} */ (data);
 }
 

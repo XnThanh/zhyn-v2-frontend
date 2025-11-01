@@ -249,10 +249,10 @@ async function fetchSentences() {
     console.log("generateSentences payload:", payload);
 
     // TEMPORARY: Use hardcoded sentences for development instead of LLM
-    const response = ["他好嗎？", "我很好。", "謝謝你。"];
+    // const response = ["他好嗎？", "我很好。", "謝謝你。"];
     // Uncomment below to use real LLM:
-    // const response = await generateSentences(payload);
-    // console.log("generateSentences response:", response);
+    const response = await generateSentences(payload);
+    console.log("generateSentences response:", response);
 
     if (response) {
       sentences.value = Array.isArray(response)
@@ -673,6 +673,8 @@ h1 {
   color: rgba(255, 255, 255, 0.85);
   font-size: 0.9rem;
   user-select: none;
+  font-family: "Inconsolata", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
 }
 
 .timer {
@@ -809,6 +811,8 @@ h1 {
 
 .input-display.placeholder {
   color: rgba(200, 200, 200, 0.4);
+  font-family: "Inconsolata", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
 }
 
 @keyframes blink {

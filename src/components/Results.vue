@@ -49,7 +49,7 @@ function retry() {
 
 <template>
   <div class="results-page">
-    <div class="results-layout">
+    <div class="results-layout font-mono">
       <!-- Left: Stats -->
       <section class="left-panel glow-container">
         <h1>Game Complete</h1>
@@ -84,7 +84,7 @@ function retry() {
 
       <!-- Right: Mistakes -->
       <section class="right-panel glow-container">
-        <h2>Mistakes to Review</h2>
+        <h1>Review Mistakes</h1>
         <div class="error-list">
           <template
             v-if="

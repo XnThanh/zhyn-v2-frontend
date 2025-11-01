@@ -69,7 +69,7 @@ onUnmounted(() => {
 <template>
   <div class="topic-select">
     <div class="topic-select-container">
-      <h1 class="title">Choose a Topic</h1>
+      <h1 class="title">Select Topic</h1>
       <div class="topics-list">
         <div
           v-for="(topic, idx) in defaultTopics"
@@ -227,7 +227,7 @@ onUnmounted(() => {
   font-size: 1.1rem;
   padding: 0.5em 1em;
   border-radius: 6px;
-  border: 1.5px solid var(--color-secondary);
+  border: 1.5px solid var(--color-primary);
   background: rgba(255, 255, 255, 0.12);
   color: white;
   outline: none;

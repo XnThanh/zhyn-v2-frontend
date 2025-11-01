@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;600;700&display=swap");
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -105,4 +107,10 @@ button:focus-visible {
     0 0 20px rgba(var(--color-primary-rgb), 0.55),
     inset 0 0 10px rgba(var(--color-primary-rgb), 0.3);
   border-radius: 0; /* sharp 90° corners */
+}
+
+/* Utility: Inconsolata font for English/monospace text */
+.font-mono {
+  font-family: "Inconsolata", ui-monospace, SFMono-Regular, Menlo, Consolas,
+    monospace;
 }
