@@ -15,6 +15,7 @@
   --color-secondary: #cc3f0c;
   --color-tertiary: #f49f0a;
   --color-tertiary-rgb: 244, 159, 10;
+  --color-quarternary: rgb(118, 38, 193);
   --color-gray: #e9e9e9;
   --color-dark: #0d1518;
 
@@ -95,3 +96,13 @@ button:focus-visible {
 }
 
 /* Light mode override removed - using dark theme with custom colors */
+
+/* Reusable primary glow container */
+.glow-container {
+  border: 2px solid var(--color-primary);
+  background: rgba(var(--color-primary-rgb), 0.2); /* ~80% transparency */
+  box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.9),
+    0 0 20px rgba(var(--color-primary-rgb), 0.55),
+    inset 0 0 10px rgba(var(--color-primary-rgb), 0.3);
+  border-radius: 0; /* sharp 90° corners */
+}

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onMounted } from "vue";
 import { useRouter } from "vue-router";
+import "./../style.css";
 
 const router = useRouter();
 
@@ -48,93 +49,113 @@ function retry() {
 
 <template>
   <div class="results-page">
-    <div class="results-container">
-      <h1>Game Complete</h1>
+    <div class="results-layout">
+      <!-- Left: Stats -->
+      <section class="left-panel glow-container">
+        <h1>Game Complete</h1>
 
-      <div v-if="stats" class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">Avg Speed</div>
-          <div class="stat-value">{{ formattedAvgSpeed }}</div>
-        </div>
+        <template v-if="stats">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Avg Speed</div>
+              <div class="stat-value">{{ formattedAvgSpeed }}</div>
+            </div>
 
-        <div class="stat-card">
-          <div class="stat-label">Accuracy</div>
-          <div class="stat-value">{{ accuracy }}%</div>
-        </div>
+            <div class="stat-card">
+              <div class="stat-label">Accuracy</div>
+              <div class="stat-value">{{ accuracy }}%</div>
+            </div>
 
-        <div class="stat-card">
-          <div class="stat-label">Errors</div>
-          <div class="stat-value">{{ errorCount }}</div>
-        </div>
-      </div>
-
-      <!-- Incorrect Records Section -->
-      <div
-        v-if="
-          stats && stats.incorrectRecords && stats.incorrectRecords.length > 0
-        "
-        class="errors-section"
-      >
-        <h2>Mistakes to Review</h2>
-        <div class="error-list">
-          <div
-            v-for="(record, idx) in stats.incorrectRecords"
-            :key="idx"
-            class="error-item"
-          >
-            <div class="character">{{ record.character }}</div>
-            <div class="responses">
-              <div class="response-row">
-                <span class="label incorrect">Your answer:</span>
-                <span class="zhuyin incorrect">{{
-                  record.response || "(no input)"
-                }}</span>
-              </div>
-              <div class="response-row">
-                <span class="label correct">Correct:</span>
-                <span class="zhuyin correct">{{ record.target }}</span>
-              </div>
+            <div class="stat-card">
+              <div class="stat-label">Errors</div>
+              <div class="stat-value">{{ errorCount }}</div>
             </div>
           </div>
+        </template>
+        <div v-else class="no-stats">
+          <p>No statistics available</p>
         </div>
-      </div>
 
-      <div v-else class="no-stats">
-        <p>No statistics available</p>
-      </div>
+        <div class="actions">
+          <button class="btn btn-primary" @click="retry">Try Again</button>
+          <button class="btn btn-secondary" @click="goHome">Home</button>
+        </div>
+      </section>
 
-      <div class="actions">
-        <button class="btn btn-primary" @click="retry">Try Again</button>
-        <button class="btn btn-secondary" @click="goHome">Home</button>
-      </div>
+      <!-- Right: Mistakes -->
+      <section class="right-panel glow-container">
+        <h2>Mistakes to Review</h2>
+        <div class="error-list">
+          <template
+            v-if="
+              stats &&
+              stats.incorrectRecords &&
+              stats.incorrectRecords.length > 0
+            "
+          >
+            <div
+              v-for="(record, idx) in stats.incorrectRecords"
+              :key="idx"
+              class="error-item"
+            >
+              <div class="character">{{ record.character }}</div>
+              <div class="responses">
+                <div class="response-row">
+                  <span class="label incorrect">Your answer:</span>
+                  <span class="zhuyin incorrect">{{
+                    record.response || "(no input)"
+                  }}</span>
+                </div>
+                <div class="response-row">
+                  <span class="label correct">Correct:</span>
+                  <span class="zhuyin correct">{{ record.target }}</span>
+                </div>
+              </div>
+            </div>
+          </template>
+          <div v-else class="no-errors">No mistakes 🎉</div>
+        </div>
+      </section>
     </div>
   </div>
 </template>
 
 <style scoped>
 .results-page {
-  min-height: calc(100vh - 60px);
-  padding: 2rem 1rem;
+  height: calc(100vh - 60px); /* lock to viewport so only right panel scrolls */
+  padding: 1rem;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
+  overflow: hidden; /* prevent page overflow */
+  box-sizing: border-box;
 }
 
-.results-container {
-  max-width: 800px;
+.results-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
   width: 100%;
-  padding: 3rem 2rem;
-  background: rgba(22, 25, 37, 0.85);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  text-align: center;
+  max-width: 1200px;
+  height: 100%;
+}
+
+.left-panel,
+.right-panel {
+  flex: 1 1 50%;
+  min-width: 0; /* allow flex children to shrink without overflow */
+  padding: 1.5rem;
+  box-sizing: border-box;
+  overflow: hidden; /* contain inner scroll areas */
+  display: flex;
+  flex-direction: column; /* make list fill and scroll inside */
 }
 
 h1 {
-  color: #fc9e4f;
-  margin-bottom: 3rem;
-  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 1.5rem;
+  font-size: 2.4rem;
+  text-align: center;
 }
 
 .stats-grid {
@@ -154,7 +175,7 @@ h1 {
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(252, 158, 79, 0.2);
+  box-shadow: 0 8px 16px rgba(var(--color-primary-rgb), 0.2);
 }
 
 .stat-label {
@@ -177,15 +198,10 @@ h1 {
   font-size: 1.2rem;
 }
 
-.errors-section {
-  margin: 2rem 0 3rem;
-  text-align: left;
-}
-
-.errors-section h2 {
-  color: #fc9e4f;
+.right-panel h2 {
+  color: var(--color-primary);
   font-size: 1.8rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   text-align: center;
 }
 
@@ -193,8 +209,9 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-height: 400px;
-  overflow-y: auto;
+  flex: 1 1 auto; /* take remaining space */
+  min-height: 0; /* allow flex child to shrink for scroll */
+  overflow-y: auto; /* scroll only this column */
   padding: 0.5rem;
 }
 
@@ -214,7 +231,12 @@ h1 {
   font-weight: bold;
   min-width: 60px;
   text-align: center;
-  background: rgba(192, 132, 151, 0.2);
+  /* Primary glow styling for mistake characters */
+  background: rgba(var(--color-primary-rgb), 0.2);
+  border: 2px solid var(--color-primary);
+  box-shadow: 0 0 10px rgba(var(--color-primary-rgb), 0.9),
+    0 0 20px rgba(var(--color-primary-rgb), 0.55),
+    inset 0 0 10px rgba(var(--color-primary-rgb), 0.3);
   border-radius: 8px;
   padding: 0.5rem;
 }
@@ -241,11 +263,11 @@ h1 {
 }
 
 .response-row .label.incorrect {
-  color: #fc9e4f;
+  color: var(--color-tertiary);
 }
 
 .response-row .label.correct {
-  color: #9dbbae;
+  color: var(--color-primary);
 }
 
 .response-row .zhuyin {
@@ -256,12 +278,12 @@ h1 {
 }
 
 .response-row .zhuyin.incorrect {
-  color: #fc9e4f;
+  color: var(--color-tertiary);
   background: rgba(252, 158, 79, 0.1);
 }
 
 .response-row .zhuyin.correct {
-  color: #9dbbae;
+  color: var(--color-primary);
   background: rgba(157, 187, 174, 0.1);
 }
 
@@ -270,6 +292,7 @@ h1 {
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
 .btn {
@@ -284,12 +307,12 @@ h1 {
 }
 
 .btn-primary {
-  background: var(--color-secondary, #fc9e4f);
+  background: var(--color-primary, var(--color-primary-light));
   color: #fff;
 }
 
 .btn-primary:hover {
-  background: #fd8e35;
+  background: var(--color-primary-light);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(252, 158, 79, 0.4);
 }
