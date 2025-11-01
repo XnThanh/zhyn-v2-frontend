@@ -38,9 +38,9 @@ function closeMenu() {
         <router-link to="/" class="nav-link" @click="closeMenu"
           >Home</router-link
         >
-        <router-link to="/practice" class="nav-link" @click="closeMenu"
+        <!-- <router-link to="/practice" class="nav-link" @click="closeMenu"
           >Practice</router-link
-        >
+        > -->
         <!-- <router-link to="/playground" class="nav-link" @click="closeMenu"
           >Playground</router-link
         > -->

@@ -44,4 +44,35 @@ const router = createRouter({
   routes,
 });
 
+// Navigation guards for debugging
+router.beforeEach((to, from, next) => {
+  try {
+    console.debug("[Router] Navigating", {
+      from: from.name || from.path,
+      to: to.name || to.path,
+      params: to.params,
+      query: to.query,
+    });
+  } catch {}
+  next();
+});
+
+router.afterEach((to, from, failure) => {
+  if (failure) {
+    console.error("[Router] Navigation failed", {
+      from: from.name || from.path,
+      to: to.name || to.path,
+      failure,
+    });
+  }
+});
+
+router.onError((error) => {
+  console.error("[Router] Error", {
+    error,
+    message: error.message,
+    stack: error.stack,
+  });
+});
+
 export default router;
