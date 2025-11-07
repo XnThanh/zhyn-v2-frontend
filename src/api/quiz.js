@@ -1,10 +1,14 @@
 import { post } from "./client";
 
 // Quiz API
+const API_KEY = import.meta.env.API_KEY || import.meta.env.VITE_API_KEY;
 
 /** Create a new quiz with duration length (number, e.g., milliseconds or seconds as backend expects) */
 export function makeQuiz({ length }) {
-  return post("/Quiz/makeQuiz", { length });
+  return post("/Quiz/makeQuiz", {
+    apiKey: API_KEY,
+    length,
+  });
 }
 
 /** End quiz and get summary */

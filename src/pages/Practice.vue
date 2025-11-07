@@ -23,7 +23,7 @@ const selectedTopic = computed(() => getSelectedTopic());
 const currentCharIdx = ref(0); // index of the current character to type
 
 // Countdown timer
-const initialTime = 30; // seconds (DEVELOPMENT: reduced from 60 for testing)
+const initialTime = 10; // seconds (DEVELOPMENT: reduced from 60 for testing)
 const timeLeft = ref(initialTime);
 let timer = null;
 let quizExpiryTime = null; // Backend expiry time
@@ -272,10 +272,10 @@ async function fetchSentences() {
     console.log("generateSentences payload:", payload);
 
     // TEMPORARY: Use hardcoded sentences for development instead of LLM
-    const response = ["他？！", "他，和、我。", "謝謝你。"];
+    // const response = ["他？！", "他，和、我。", "謝謝你。"];
     // Uncomment below to use real LLM:
-    // const response = await generateSentences(payload);
-    // console.log("generateSentences response:", response);
+    const response = await generateSentences(payload);
+    console.log("generateSentences response:", response);
 
     if (response) {
       sentences.value = Array.isArray(response)
