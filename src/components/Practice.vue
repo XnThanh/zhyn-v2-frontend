@@ -249,10 +249,10 @@ async function fetchSentences() {
     console.log("generateSentences payload:", payload);
 
     // TEMPORARY: Use hardcoded sentences for development instead of LLM
-    // const response = ["他好嗎？", "我很好。", "謝謝你。"];
+    const response = ["他好嗎？", "我很好。", "謝謝你。"];
     // Uncomment below to use real LLM:
-    const response = await generateSentences(payload);
-    console.log("generateSentences response:", response);
+    // const response = await generateSentences(payload);
+    // console.log("generateSentences response:", response);
 
     if (response) {
       sentences.value = Array.isArray(response)

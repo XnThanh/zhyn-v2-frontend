@@ -55,8 +55,19 @@ body {
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 4.5em;
   line-height: 1.1;
+}
+
+h2 {
+  font-size: 2em;
+  /* line-height: 1.1; */
+}
+
+h3 {
+  font-size: 1.5em;
+  color: gray;
+  /* line-height: 1.1; */
 }
 
 button {
@@ -66,16 +77,16 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: var(--color-primary);
-  color: var(--color-dark);
+  /* background-color: var(--color-primary);
+  color: var(--color-dark); */
   cursor: pointer;
   transition: all 0.25s;
 }
-button:hover {
+/* button:hover {
   background-color: var(--color-secondary);
   border-color: var(--color-secondary);
   transform: translateY(-1px);
-}
+} */
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -96,8 +107,6 @@ button:focus-visible {
   height: 100vh;
   background: transparent;
 }
-
-/* Light mode override removed - using dark theme with custom colors */
 
 /* Reusable primary glow container */
 .glow-container {

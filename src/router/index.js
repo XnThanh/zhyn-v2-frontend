@@ -5,10 +5,17 @@ import Practice from "../components/Practice.vue";
 import Results from "../components/Results.vue";
 import ApiPlayground from "../components/ApiPlayground.vue";
 import About from "../components/About.vue";
+import Landing from "../components/Landing.vue";
 
 const routes = [
   {
     path: "/",
+    name: "Landing",
+    component: Landing,
+    meta: { hideNavbar: true },
+  },
+  {
+    path: "/home",
     name: "Home",
     component: LevelSelect,
   },

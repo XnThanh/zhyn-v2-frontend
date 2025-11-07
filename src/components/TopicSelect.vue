@@ -121,6 +121,7 @@ onUnmounted(() => {
 
 <style scoped>
 .topic-select {
+  /* max-height: calc(100dvh - 60px); */
   height: calc(100dvh - 60px);
   min-height: 0;
   width: 100vw;
