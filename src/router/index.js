@@ -7,6 +7,7 @@ import ApiPlayground from "../components/ApiPlayground.vue";
 import About from "../components/About.vue";
 import Landing from "../pages/Landing.vue";
 import HelpGuide from "../pages/HelpGuide.vue";
+import PinyinConversion from "../pages/PinyinConversion.vue";
 
 const routes = [
   {
@@ -51,6 +52,11 @@ const routes = [
     name: "Help",
     component: HelpGuide,
     meta: { transition: "slide-up" },
+  },
+  {
+    path: "/conversion",
+    name: "PinyinConversion",
+    component: PinyinConversion,
   },
 ];
 

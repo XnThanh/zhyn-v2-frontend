@@ -23,7 +23,7 @@ const selectedTopic = computed(() => getSelectedTopic());
 const currentCharIdx = ref(0); // index of the current character to type
 
 // Countdown timer
-const initialTime = 10; // seconds (DEVELOPMENT: reduced from 60 for testing)
+const initialTime = 30; // seconds (DEVELOPMENT: reduced from 60 for testing)
 const timeLeft = ref(initialTime);
 let timer = null;
 let quizExpiryTime = null; // Backend expiry time
@@ -148,35 +148,6 @@ watch(showKeyboard, (val) => {
     keyHighlighting.value = false;
   }
 });
-
-// Compute the next Zhuyin symbol to highlight based on current char and typed zhuyin
-// Optionally consider the next raw character to suppress space before punctuation
-// function buildHighlightSteps(expectedZhuyin, nextChar = "") {
-//   const steps = [];
-//   const s = (expectedZhuyin || "").toString();
-//   // Special composition: Chinese period and question mark
-//   if (s === "。") {
-//     steps.push("`", ".");
-//     return steps;
-//   }
-//   if (s === "？") {
-//     steps.push("`", "?");
-//     return steps;
-//   }
-//   // Default: each zhuyin symbol is one step
-//   for (const ch of s) steps.push(ch);
-//   // If there is no tone mark, require a space before submit
-//   const hasTone = /[ˇˋˊ˙]/.test(s);
-//   // Treat standalone punctuation as not requiring a space
-//   const isPunctuation = /^[、。？！?!.,;:'"`\-]$/.test(s);
-//   // Also, if the NEXT character is punctuation, do not ask for a space here
-//   const nextIsPunctuation = nextChar
-//     ? /[、。？！?!.,;:'"`\-]/.test(nextChar)
-//     : false;
-//   if (!hasTone && s.length > 0 && !isPunctuation && !nextIsPunctuation)
-//     steps.push("SPACE");
-//   return steps;
-// }
 
 function buildHighlightSteps(expectedZhuyin, nextChar = "") {
   const steps = [];

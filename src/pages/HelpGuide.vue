@@ -15,8 +15,7 @@ const beginGame = () => {
     class="help-guide dark-overlay dark-overlay-60 blur-overlay"
     style="--blur-amount: 4px"
   >
-    <div class="help-content">
-      <p class="author-center font-mono">Made by LTX</p>
+    <div class="help-content" ref="helpContentRef">
       <h1 class="font-mono">Welcome to ZHYN</h1>
       <h2 class="font-mono">Help Guide</h2>
 
@@ -59,6 +58,11 @@ const beginGame = () => {
           </li>
         </ul>
         <keyboard />
+
+        Already know Pinyin?
+        <router-link to="/conversion" class="conversion-link"
+          >View the conversion chart →</router-link
+        >
       </section>
 
       <section class="help-section">
@@ -86,9 +90,35 @@ const beginGame = () => {
       <button class="begin-game-btn font-mono" @click="beginGame">
         Begin Game
       </button>
+      <p class="author-credit font-mono" :class="{ visible: authorVisible }">
+        Made by LTX
+      </p>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  mounted() {
+    const contentEl = this.$refs.helpContentRef;
+    const onScroll = () => {
+      if (!contentEl) return;
+      const scrollPos = window.scrollY + window.innerHeight;
+      const threshold = contentEl.offsetTop + contentEl.offsetHeight - 40; // 40px leeway
+      this.authorVisible = scrollPos >= threshold;
+    };
+    window.addEventListener("scroll", onScroll);
+    onScroll();
+    this._cleanupScroll = () => window.removeEventListener("scroll", onScroll);
+  },
+  unmounted() {
+    this._cleanupScroll && this._cleanupScroll();
+  },
+  data() {
+    return { authorVisible: false };
+  },
+};
+</script>
 
 <style scoped>
 .help-guide {
@@ -148,6 +178,36 @@ const beginGame = () => {
   font-size: 1rem;
   line-height: 1.6;
   color: #ccc;
+}
+
+.conversion-link {
+  color: var(--color-primary);
+  text-decoration: none;
+  font-weight: 600;
+  position: relative;
+  transition: color 0.25s ease;
+}
+.conversion-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  height: 2px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    rgba(var(--color-primary-rgb), 0.4)
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.conversion-link:hover {
+  color: var(--color-primary-light);
+}
+.conversion-link:hover::after {
+  transform: scaleX(1);
 }
 
 .help-section ul {
@@ -212,5 +272,21 @@ const beginGame = () => {
 
 .begin-game-btn:active {
   transform: scale(0.98);
+}
+
+.author-credit {
+  width: 100%;
+  text-align: center;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  color: rgba(255, 255, 255, 0.6);
+}
+.author-credit.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

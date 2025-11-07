@@ -62,18 +62,6 @@ onUnmounted(() => {
   box-sizing: border-box;
 }
 
-/* dark overlay */
-/* .landing-page::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* adjust 0.5 = 50% darkness */
-/* z-index: 0; /* behind text */
-/* }  */
-
 .main-content {
   flex-grow: 1; /* takes up remaining vertical space */
   display: flex;
@@ -89,14 +77,6 @@ onUnmounted(() => {
   position: relative;
   z-index: 1;
 }
-
-/* .author {
-  position: fixed;
-  bottom: 0.5rem;
-  right: 2rem;
-  color: gray;
-  font-size: 1rem;
-} */
 
 .pulse {
   display: inline-block;
