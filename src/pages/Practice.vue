@@ -128,21 +128,19 @@ const zhuyin_keymap = {
   "'": "、",
   "`": "`",
   "?": "?",
-  "？": "？",
+  // "？": "？",
   "!": "!",
-  "。": "。",
+  // "。": "。",
 };
 const loading = ref(true);
 const error = ref(null);
 
-// Toggle for keyboard highlighting feature
+// Keyboard toggles
 const keyHighlighting = ref(false);
-// Toggle for showing QWERTY legends
 const showQwerty = ref(false);
-// Toggle for showing/hiding the keyboard
-const showKeyboard = ref(false);
+const showKeyboard = ref(true);
 
-// When keyboard is turned on, default to QWERTY + Key Helper on
+// When keyboard is turned on, default to QWERTY + Key Helper off
 watch(showKeyboard, (val) => {
   if (val) {
     showQwerty.value = false;
@@ -184,27 +182,51 @@ function buildHighlightSteps(expectedZhuyin, nextChar = "") {
   const s = (expectedZhuyin || "").toString();
 
   // Special composition: Chinese period and question mark
-  if (s === "。") {
+  if (s === "`.") {
     steps.push("`", ".");
     return steps;
   }
-  if (s === "？") {
-    steps.push("`", "?");
+  if (s === "`?") {
+    steps.push("`", "SHIFT+?");
+    return steps;
+  }
+  if (s === "`,") {
+    steps.push("`", ",");
+    return steps;
+  }
+  if (s === "`'") {
+    steps.push("`", "'");
+    return steps;
+  }
+  if (s === "`!") {
+    steps.push("`", "SHIFT+!");
     return steps;
   }
 
-  // Default: each zhuyin symbol is one step
-  for (const ch of s) steps.push(ch);
+  // Check if the expected zhuyin already contains a trailing space
+  const hasTrailingSpace = s.endsWith(" ");
 
-  const hasTone = /[ˇˋˊ˙]/.test(s);
-  const isPunctuation = /^[、。？！？，．?!.,;:'"`\-]$/.test(s);
-  const nextIsPunctuation = nextChar
-    ? /[、。？！？，．?!.,;:'"`\-]/.test(nextChar)
-    : false;
+  // Default: each zhuyin symbol is one step (including space if present)
+  for (const ch of s) {
+    if (ch === " ") {
+      steps.push("SPACE");
+    } else {
+      steps.push(ch);
+    }
+  }
 
-  // Only require space if no tone, not punctuation, and not followed by punctuation
-  if (!hasTone && s.length > 0 && !isPunctuation && !nextIsPunctuation)
-    steps.push("SPACE");
+  // If space is already in the string, don't add it again
+  if (!hasTrailingSpace) {
+    const hasTone = /[ˇˋˊ˙]/.test(s);
+    const isPunctuation = /^[、。？！，．?!.,;:'"`\-]$/.test(s);
+    const nextIsPunctuation = nextChar
+      ? /[、。？！，．?!.,;:'"`\-]/.test(nextChar)
+      : false;
+
+    // Only require space if no tone, not punctuation, and not followed by punctuation
+    if (!hasTone && s.length > 0 && !isPunctuation && !nextIsPunctuation)
+      steps.push("SPACE");
+  }
 
   return steps;
 }
@@ -249,7 +271,7 @@ async function fetchSentences() {
     console.log("generateSentences payload:", payload);
 
     // TEMPORARY: Use hardcoded sentences for development instead of LLM
-    const response = ["他好嗎？", "我很好。", "謝謝你。"];
+    const response = ["他？！", "他，和、我。", "謝謝你。"];
     // Uncomment below to use real LLM:
     // const response = await generateSentences(payload);
     // console.log("generateSentences response:", response);
@@ -318,17 +340,26 @@ async function fetchSentences() {
   }
 }
 function keystrokesToZhuyin(str) {
-  // Handle special combinations first
-  // Backtick + period should map to Chinese period
-  str = str.replace(/`\./g, "`.");
-  // // Backtick + question should map to Chinese question mark
-  // str = str.replace(/`\?/g, "？");
+  // Handle special combinations first by replacing with placeholder tokens
+  // Use unique tokens that won't conflict with actual input
+  str = str.replace(/`\./g, "〇PERIOD〇");
+  str = str.replace(/`\?/g, "〇QUESTION〇");
+  str = str.replace(/`\,/g, "〇DOUHAO〇");
+  str = str.replace(/`\'/g, "〇DUNHAO〇");
 
   // Map each character in the string to zhuyin using the keymap
-  return str
+  let result = str
     .split("")
-    .map((k) => zhuyin_keymap[k] || "")
+    .map((k) => zhuyin_keymap[k] || k)
     .join("");
+
+  // Replace placeholder tokens with actual Chinese punctuation
+  result = result.replace(/〇PERIOD〇/g, "`.");
+  result = result.replace(/〇QUESTION〇/g, "`?");
+  result = result.replace(/〇DOUHAO〇/g, "`,");
+  result = result.replace(/〇DUNHAO〇/g, "`'");
+
+  return result;
 }
 
 async function handleInputKeydown(e) {

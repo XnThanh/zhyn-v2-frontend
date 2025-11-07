@@ -1,11 +1,25 @@
 <script setup>
+import { computed } from "vue";
 import Key from "./Key.vue";
 
 // Highlighting controls come from parent (Practice.vue)
-defineProps({
+const props = defineProps({
   keyHighlighting: { type: Boolean, default: false },
   activeZhuyin: { type: String, default: "" },
   showQwerty: { type: Boolean, default: true },
+});
+
+// Check if shift key should be highlighted
+const isShiftActive = computed(() => {
+  return props.keyHighlighting && props.activeZhuyin.startsWith("SHIFT+");
+});
+
+// Get the actual character after SHIFT+
+const getCharFromShift = computed(() => {
+  if (props.activeZhuyin.startsWith("SHIFT+")) {
+    return props.activeZhuyin.replace("SHIFT+", "");
+  }
+  return props.activeZhuyin;
 });
 </script>
 
@@ -25,7 +39,9 @@ defineProps({
         size="normal"
         :isZhuyin="true"
         :show-qwerty="showQwerty"
-        :active="keyHighlighting && activeZhuyin === 'ㄅ'"
+        :active="
+          keyHighlighting && (activeZhuyin === 'ㄅ' || getCharFromShift === '!')
+        "
         keyboardChar="1"
         >ㄅ</Key
       >
@@ -288,7 +304,7 @@ defineProps({
         size="normal"
         :isZhuyin="true"
         :show-qwerty="showQwerty"
-        :active="keyHighlighting && activeZhuyin === '、'"
+        :active="keyHighlighting && activeZhuyin === '\''"
         keyboardChar="'"
         >、</Key
       >
@@ -299,7 +315,7 @@ defineProps({
 
     <!-- Third Letter Row (ZXCVBN) -->
     <div class="keyboard-row">
-      <Key size="shift-left">⇧</Key>
+      <Key size="shift-left" :active="isShiftActive">⇧</Key>
       <Key
         size="normal"
         :isZhuyin="true"
@@ -381,12 +397,12 @@ defineProps({
         :isZhuyin="true"
         :show-qwerty="showQwerty"
         :active="
-          keyHighlighting && (activeZhuyin === 'ㄥ' || activeZhuyin === '?')
+          keyHighlighting && (activeZhuyin === 'ㄥ' || getCharFromShift === '?')
         "
         keyboardChar="/"
         >ㄥ</Key
       >
-      <Key size="shift-right">⇧</Key>
+      <Key size="shift-right" :active="isShiftActive">⇧</Key>
     </div>
 
     <!-- Bottom Row (Space bar row) -->
