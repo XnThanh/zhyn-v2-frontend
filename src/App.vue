@@ -27,27 +27,29 @@ const transitionName = computed(() => route.meta.transition || "fade");
 /* Slide-up transition */
 .slide-up-enter-active,
 .slide-up-leave-active {
-  transition: all 0.3s ease-out;
+  transition: all 0.6s ease-out;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
 
 .slide-up-enter-from {
-  opacity: 0;
-  transform: translateY(300px);
+  transform: translateY(100%);
 }
 
 .slide-up-enter-to {
-  opacity: 1;
   transform: translateY(0);
 }
 
 .slide-up-leave-from {
-  opacity: 1;
   transform: translateY(0);
 }
 
 .slide-up-leave-to {
-  opacity: 0;
-  transform: translateY(-300px);
+  transform: translateY(-100%);
 }
 
 /* Slide-left transition */
@@ -56,7 +58,7 @@ const transitionName = computed(() => route.meta.transition || "fade");
   transition: all 0.6s ease-out;
   position: absolute;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   top: 0;
   left: 0;
 }
