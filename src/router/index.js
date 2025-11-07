@@ -24,6 +24,7 @@ const routes = [
     path: "/topic",
     name: "TopicSelect",
     component: TopicSelect,
+    meta: { transition: "slide-left" },
   },
   {
     path: "/practice",

@@ -125,6 +125,7 @@ onUnmounted(() => {
 <style scoped>
 .topic-select {
   background: url("./../assets/taipei101-background2.jpg") no-repeat top center;
+  background-size: cover;
   height: 100vh;
   min-height: 0;
   width: 100vw;
@@ -135,7 +136,7 @@ onUnmounted(() => {
   padding: 0;
   margin: 0;
   overflow: hidden;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 .topic-select-container {

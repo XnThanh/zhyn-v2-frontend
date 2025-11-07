@@ -10,7 +10,7 @@ const transitionName = computed(() => route.meta.transition || "fade");
 <template>
   <!-- <Navbar /> -->
   <router-view v-slot="{ Component }">
-    <transition :name="transitionName" mode="out-in">
+    <transition :name="transitionName">
       <component :is="Component" :key="route.path" />
     </transition>
   </router-view>
@@ -48,6 +48,33 @@ const transitionName = computed(() => route.meta.transition || "fade");
 .slide-up-leave-to {
   opacity: 0;
   transform: translateY(-300px);
+}
+
+/* Slide-left transition */
+.slide-left-enter-active,
+.slide-left-leave-active {
+  transition: all 0.6s ease-out;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.slide-left-enter-from {
+  transform: translateX(100%);
+}
+
+.slide-left-enter-to {
+  transform: translateX(0);
+}
+
+.slide-left-leave-from {
+  transform: translateX(0);
+}
+
+.slide-left-leave-to {
+  transform: translateX(-100%);
 }
 
 /* Default fade transition for other routes */

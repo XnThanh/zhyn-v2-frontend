@@ -78,8 +78,8 @@ onUnmounted(() => {
 .level-select {
   background: url("./../assets/taipei101-background2.jpg") no-repeat top center;
   background-size: cover;
-  background-attachment: fixed;
-  background-position: top center;
+  /* background-attachment: fixed;
+  background-position: top center; */
   height: 100vh;
   min-height: 0;
   display: flex;
