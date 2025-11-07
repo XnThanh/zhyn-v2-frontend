@@ -5,13 +5,21 @@ import "./../style.css";
 
 const router = useRouter();
 
+const startGame = () => {
+  router.push("/level");
+};
+
+const showHelp = () => {
+  router.push("/help");
+};
+
 const handleKeyDown = (event) => {
   if (event.code === "Space") {
     event.preventDefault();
-    router.push("/level");
+    startGame();
   } else if (event.key === "h" || event.key === "H") {
     event.preventDefault();
-    router.push("/help");
+    showHelp();
   }
 };
 
@@ -28,10 +36,14 @@ onUnmounted(() => {
   <div class="landing-page dark-overlay dark-overlay-60">
     <div class="main-content">
       <h1 class="welcome-msg font-mono">Welcome to ZHYN</h1>
-      <h2 class="font-mono pulse">&lt; press space to start &gt;</h2>
+      <h2 class="font-mono pulse clickable" @click="startGame">
+        &lt; press space to start &gt;
+      </h2>
     </div>
     <div class="bottom-content">
-      <h3 class="welcome-msg font-mono">&lt; press h for help &gt;</h3>
+      <h3 class="welcome-msg font-mono clickable" @click="showHelp">
+        &lt; press h for help &gt;
+      </h3>
     </div>
     <p class="author font-mono">Made by LTX</p>
   </div>
@@ -90,6 +102,20 @@ onUnmounted(() => {
   display: inline-block;
   animation: pulse 1.6s ease-in-out infinite;
   will-change: transform, opacity;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.clickable:hover {
+  transform: scale(1.05);
+  color: var(--color-primary);
+}
+
+.clickable:active {
+  transform: scale(0.98);
 }
 
 @keyframes pulse {
