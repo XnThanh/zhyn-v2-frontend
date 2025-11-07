@@ -466,86 +466,83 @@ function startTimerWithExpiry() {
 <template>
   <div class="practice-page">
     <div class="practice-container">
-      <!-- Main content above -->
-      <div class="practice-main">
-        <div class="timer">{{ formattedTime }}</div>
-        <div class="word-row">
-          <div class="word-box">
-            <span v-if="loading" class="loading-text"
-              >Loading sentences...</span
-            >
-            <span v-else-if="error" class="error-text">{{ error }}</span>
-            <template v-else>
-              <CharDisplay
-                v-for="(char, idx) in chars"
-                :key="idx"
-                :char="char"
-                :class="{
-                  current: idx === currentCharIdx,
-                  incorrect: incorrectChars[idx],
-                }"
-              />
-            </template>
-          </div>
-          <div class="toolbar">
-            <div class="toggle-group">
-              <span class="switch-text">Keyboard</span>
-              <label class="switch">
-                <input type="checkbox" v-model="showKeyboard" />
-                <span class="slider"></span>
-              </label>
-            </div>
-            <transition name="slide-down">
-              <div v-if="showKeyboard" class="sub-toggles">
-                <div class="toggle-group">
-                  <span class="switch-text">QWERTY</span>
-                  <label class="switch">
-                    <input type="checkbox" v-model="showQwerty" />
-                    <span class="slider"></span>
-                  </label>
-                </div>
-                <div class="toggle-group">
-                  <span class="switch-text">Key Helper</span>
-                  <label class="switch">
-                    <input type="checkbox" v-model="keyHighlighting" />
-                    <span class="slider"></span>
-                  </label>
-                </div>
-              </div>
-            </transition>
-          </div>
-        </div>
-        <div class="input-wrapper">
-          <input
-            class="input-box hidden-input"
-            v-model="userInput"
-            type="text"
-            placeholder=""
-            autocomplete="off"
-            spellcheck="false"
-            @keydown="handleInputKeydown"
-            @focus="inputFocused = true"
-            @blur="inputFocused = false"
-          />
-          <div
-            class="input-display"
-            :class="{
-              placeholder: !displayInput,
-              focused: inputFocused,
-              'cursor-left': !displayInput && inputFocused,
-              'cursor-end': displayInput && inputFocused,
-            }"
+      <div class="timer">{{ formattedTime }}</div>
+      <div class="word-row">
+        <div class="word-box">
+          <span v-if="loading" class="loading-text font-mono"
+            >Loading sentences...</span
           >
-            {{ displayInput || "Start Typing..." }}
+          <span v-else-if="error" class="error-text">{{ error }}</span>
+          <template v-else>
+            <CharDisplay
+              v-for="(char, idx) in chars"
+              :key="idx"
+              :char="char"
+              :class="{
+                current: idx === currentCharIdx,
+                incorrect: incorrectChars[idx],
+              }"
+            />
+          </template>
+        </div>
+        <div class="toolbar">
+          <div class="toggle-group">
+            <span class="switch-text">Keyboard</span>
+            <label class="switch">
+              <input type="checkbox" v-model="showKeyboard" />
+              <span class="slider"></span>
+            </label>
           </div>
+          <transition name="slide-down">
+            <div v-if="showKeyboard" class="sub-toggles">
+              <div class="toggle-group">
+                <span class="switch-text">QWERTY</span>
+                <label class="switch">
+                  <input type="checkbox" v-model="showQwerty" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+              <div class="toggle-group">
+                <span class="switch-text">Key Helper</span>
+                <label class="switch">
+                  <input type="checkbox" v-model="keyHighlighting" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+          </transition>
         </div>
-        <div class="keyboard-box" v-if="showKeyboard">
-          <Keyboard
-            :key-highlighting="keyHighlighting"
-            :active-zhuyin="activeZhuyin"
-            :show-qwerty="showQwerty"
-          />
+      </div>
+      <div class="input-wrapper">
+        <input
+          class="input-box hidden-input"
+          v-model="userInput"
+          type="text"
+          placeholder=""
+          autocomplete="off"
+          spellcheck="false"
+          @keydown="handleInputKeydown"
+          @focus="inputFocused = true"
+          @blur="inputFocused = false"
+        />
+        <div
+          class="input-display"
+          :class="{
+            placeholder: !displayInput,
+            focused: inputFocused,
+            'cursor-left': !displayInput && inputFocused,
+            'cursor-end': displayInput && inputFocused,
+          }"
+        >
+          {{ displayInput || "Start Typing..." }}
         </div>
+      </div>
+      <div class="keyboard-box" v-if="showKeyboard">
+        <Keyboard
+          :key-highlighting="keyHighlighting"
+          :active-zhuyin="activeZhuyin"
+          :show-qwerty="showQwerty"
+        />
       </div>
     </div>
   </div>
@@ -553,7 +550,6 @@ function startTimerWithExpiry() {
 
 <style scoped>
 .practice-page {
-  /* height: calc(100vh - 150px); */
   background: url("./../assets/taipei101-background-blur.png") no-repeat top
     center;
   background-size: cover;
@@ -567,16 +563,14 @@ function startTimerWithExpiry() {
 }
 
 .practice-container {
-  /* max-width: 1200px; */
   margin: 0 auto;
   padding: 1rem;
-  /* background: rgba(22, 25, 37, 0.85); */
-  /* backdrop-filter: blur(10px); */
-  /* border-radius: 16px;
-  border: 2px solid rgba(255, 255, 255, 0.2); */
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  align-items: center; */
+  align-items: center;
+  justify-content: space-around;
+  height: 100vh;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -596,13 +590,6 @@ h1 {
 .topic-info strong {
   color: #fc9e4f;
   text-transform: capitalize;
-}
-
-.practice-main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  /* gap: 1rem; */
 }
 
 .toolbar {
