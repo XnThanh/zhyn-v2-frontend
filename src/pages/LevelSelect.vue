@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { setSelectedLevel } from "../composables/useLevel";
+import ZhynButton from "../components/ZhynButton.vue";
 
 const router = useRouter();
 
@@ -51,6 +52,7 @@ onUnmounted(() => {
   >
     <div class="level-select-container">
       <p class="author-right font-mono">Made by LTX</p>
+      <ZhynButton />
       <h1 class="title font-mono">Select Level</h1>
 
       <div class="levels-list font-mono">

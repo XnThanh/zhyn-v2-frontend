@@ -13,6 +13,7 @@ import {
   submitAnswer,
   endQuiz,
 } from "../api/quiz";
+import ZhynButton from "../components/ZhynButton.vue";
 
 const router = useRouter();
 const quizId = ref(null);
@@ -467,6 +468,7 @@ function startTimerWithExpiry() {
   <div class="practice-page">
     <div class="practice-container">
       <p class="author-right font-mono">Made by LTX</p>
+      <ZhynButton />
       <div class="timer">{{ formattedTime }}</div>
       <div class="word-row">
         <div class="word-box">

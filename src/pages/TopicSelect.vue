@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { setSelectedTopic } from "../composables/useLevel";
+import ZhynButton from "../components/ZhynButton.vue";
 
 const router = useRouter();
 
@@ -73,6 +74,7 @@ onUnmounted(() => {
   >
     <div class="topic-select-container">
       <p class="author-right font-mono">Made by LTX</p>
+      <ZhynButton />
       <h1 class="title font-mono">Select Topic</h1>
       <div class="topics-list">
         <div
