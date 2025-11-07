@@ -6,7 +6,7 @@ import Results from "../pages/Results.vue";
 import ApiPlayground from "../components/ApiPlayground.vue";
 import About from "../components/About.vue";
 import Landing from "../pages/Landing.vue";
-import HelpGuide from "../components/HelpGuide.vue";
+import HelpGuide from "../pages/HelpGuide.vue";
 
 const routes = [
   {

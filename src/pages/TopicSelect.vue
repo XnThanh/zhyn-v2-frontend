@@ -72,6 +72,7 @@ onUnmounted(() => {
     style="--blur-amount: 4px"
   >
     <div class="topic-select-container">
+      <p class="author-right font-mono">Made by LTX</p>
       <h1 class="title font-mono">Select Topic</h1>
       <div class="topics-list">
         <div

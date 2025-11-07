@@ -1,7 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import "./../style.css";
-import Keyboard from "./Keyboard.vue";
+import Keyboard from "./../components/Keyboard.vue";
 
 const router = useRouter();
 
@@ -16,6 +16,7 @@ const beginGame = () => {
     style="--blur-amount: 4px"
   >
     <div class="help-content">
+      <p class="author-center font-mono">Made by LTX</p>
       <h1 class="font-mono">Welcome to ZHYN</h1>
       <h2 class="font-mono">Help Guide</h2>
 

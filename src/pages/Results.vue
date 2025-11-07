@@ -50,6 +50,7 @@ function retry() {
 <template>
   <div class="results-page">
     <div class="results-container font-mono">
+      <p class="author-right font-mono">Made by LTX</p>
       <h1>Game Complete</h1>
       <div class="results-main font-mono">
         <!-- Left: Stats -->

@@ -45,7 +45,7 @@ onUnmounted(() => {
         &lt; press h for help &gt;
       </h3>
     </div>
-    <p class="author font-mono">Made by LTX</p>
+    <p class="author-right font-mono">Made by LTX</p>
   </div>
 </template>
 
@@ -90,13 +90,13 @@ onUnmounted(() => {
   z-index: 1;
 }
 
-.author {
+/* .author {
   position: fixed;
   bottom: 0.5rem;
   right: 2rem;
   color: gray;
   font-size: 1rem;
-}
+} */
 
 .pulse {
   display: inline-block;

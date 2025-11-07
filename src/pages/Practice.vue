@@ -466,6 +466,7 @@ function startTimerWithExpiry() {
 <template>
   <div class="practice-page">
     <div class="practice-container">
+      <p class="author-right font-mono">Made by LTX</p>
       <div class="timer">{{ formattedTime }}</div>
       <div class="word-row">
         <div class="word-box">

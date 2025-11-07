@@ -50,6 +50,7 @@ onUnmounted(() => {
     style="--blur-amount: 3px"
   >
     <div class="level-select-container">
+      <p class="author-right font-mono">Made by LTX</p>
       <h1 class="title font-mono">Select Level</h1>
 
       <div class="levels-list font-mono">
