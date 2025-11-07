@@ -49,80 +49,88 @@ function retry() {
 
 <template>
   <div class="results-page">
-    <div class="results-layout font-mono">
-      <!-- Left: Stats -->
-      <section class="left-panel glow-container">
-        <h1>Game Complete</h1>
+    <div class="results-container font-mono">
+      <h1>Game Complete</h1>
+      <div class="results-main font-mono">
+        <!-- Left: Stats -->
+        <section class="left-panel glow-container">
+          <h1>Stats</h1>
 
-        <template v-if="stats">
-          <div class="stats-grid">
-            <div class="stat-card">
-              <div class="stat-label">Avg Speed</div>
-              <div class="stat-value">{{ formattedAvgSpeed }}</div>
-            </div>
+          <template v-if="stats">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">Avg Speed</div>
+                <div class="stat-value">{{ formattedAvgSpeed }}</div>
+              </div>
 
-            <div class="stat-card">
-              <div class="stat-label">Accuracy</div>
-              <div class="stat-value">{{ accuracy }}%</div>
-            </div>
+              <div class="stat-card">
+                <div class="stat-label">Accuracy</div>
+                <div class="stat-value">{{ accuracy }}%</div>
+              </div>
 
-            <div class="stat-card">
-              <div class="stat-label">Errors</div>
-              <div class="stat-value">{{ errorCount }}</div>
-            </div>
-          </div>
-        </template>
-        <div v-else class="no-stats">
-          <p>No statistics available</p>
-        </div>
-
-        <div class="actions">
-          <button class="btn btn-primary" @click="retry">Try Again</button>
-          <button class="btn btn-secondary" @click="goHome">Home</button>
-        </div>
-      </section>
-
-      <!-- Right: Mistakes -->
-      <section class="right-panel glow-container">
-        <h1>Review Mistakes</h1>
-        <div class="error-list">
-          <template
-            v-if="
-              stats &&
-              stats.incorrectRecords &&
-              stats.incorrectRecords.length > 0
-            "
-          >
-            <div
-              v-for="(record, idx) in stats.incorrectRecords"
-              :key="idx"
-              class="error-item"
-            >
-              <div class="character">{{ record.character }}</div>
-              <div class="responses">
-                <div class="response-row">
-                  <span class="label incorrect">Your answer:</span>
-                  <span class="zhuyin incorrect">{{
-                    record.response || "(no input)"
-                  }}</span>
-                </div>
-                <div class="response-row">
-                  <span class="label correct">Correct:</span>
-                  <span class="zhuyin correct">{{ record.target }}</span>
-                </div>
+              <div class="stat-card">
+                <div class="stat-label">Errors</div>
+                <div class="stat-value">{{ errorCount }}</div>
               </div>
             </div>
           </template>
-          <div v-else class="no-errors">No mistakes 🎉</div>
-        </div>
-      </section>
+          <div v-else class="no-stats">
+            <p>No statistics available</p>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-primary" @click="retry">Try Again</button>
+            <button class="btn btn-secondary" @click="goHome">Home</button>
+          </div>
+        </section>
+
+        <!-- Right: Mistakes -->
+        <section class="right-panel glow-container">
+          <h1>Mistakes</h1>
+          <div class="error-list">
+            <template
+              v-if="
+                stats &&
+                stats.incorrectRecords &&
+                stats.incorrectRecords.length > 0
+              "
+            >
+              <div
+                v-for="(record, idx) in stats.incorrectRecords"
+                :key="idx"
+                class="error-item"
+              >
+                <div class="character">{{ record.character }}</div>
+                <div class="responses">
+                  <div class="response-row">
+                    <span class="label incorrect">Your answer:</span>
+                    <span class="zhuyin incorrect">{{
+                      record.response || "(no input)"
+                    }}</span>
+                  </div>
+                  <div class="response-row">
+                    <span class="label correct">Correct:</span>
+                    <span class="zhuyin correct">{{ record.target }}</span>
+                  </div>
+                </div>
+              </div>
+            </template>
+            <div v-else class="no-errors">No Mistakes? 你是天才! 🌟</div>
+          </div>
+        </section>
+      </div>
     </div>
   </div>
 </template>
 
 <style scoped>
 .results-page {
-  height: calc(100vh - 60px); /* lock to viewport so only right panel scrolls */
+  background: url("./../assets/taipei101-background-blur.png") no-repeat top
+    center;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; /* lock to viewport so only right panel scrolls */
   padding: 1rem;
   display: flex;
   align-items: stretch;
@@ -131,13 +139,25 @@ function retry() {
   box-sizing: border-box;
 }
 
-.results-layout {
+.results-container {
+  max-width: 1200px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.results-main {
   display: flex;
   flex-direction: row;
   gap: 1rem;
   width: 100%;
   max-width: 1200px;
-  height: 100%;
+  flex: 1;
+  min-height: 0;
 }
 
 .left-panel,
@@ -213,6 +233,14 @@ h1 {
   min-height: 0; /* allow flex child to shrink for scroll */
   overflow-y: auto; /* scroll only this column */
   padding: 0.5rem;
+}
+
+.no-errors {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-size: 1rem;
 }
 
 .error-item {
