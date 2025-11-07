@@ -1,9 +1,31 @@
 <script setup>
+import { onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
 import "./../style.css";
+
+const router = useRouter();
+
+const handleKeyDown = (event) => {
+  if (event.code === "Space") {
+    event.preventDefault();
+    router.push("/home");
+  } else if (event.key === "h" || event.key === "H") {
+    event.preventDefault();
+    router.push("/help");
+  }
+};
+
+onMounted(() => {
+  window.addEventListener("keydown", handleKeyDown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("keydown", handleKeyDown);
+});
 </script>
 
 <template>
-  <div class="landing-page">
+  <div class="landing-page dark-overlay dark-overlay-60">
     <div class="main-content">
       <h1 class="welcome-msg font-mono">Welcome to ZHYN</h1>
       <h2 class="font-mono pulse">&lt; press space to start &gt;</h2>
@@ -29,7 +51,7 @@ import "./../style.css";
 }
 
 /* dark overlay */
-.landing-page::before {
+/* .landing-page::before {
   content: "";
   position: absolute;
   top: 0;
@@ -37,8 +59,8 @@ import "./../style.css";
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.6); /* adjust 0.5 = 50% darkness */
-  z-index: 0; /* behind text */
-}
+/* z-index: 0; /* behind text */
+/* }  */
 
 .main-content {
   flex-grow: 1; /* takes up remaining vertical space */

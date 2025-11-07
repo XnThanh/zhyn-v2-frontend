@@ -6,6 +6,7 @@ import Results from "../components/Results.vue";
 import ApiPlayground from "../components/ApiPlayground.vue";
 import About from "../components/About.vue";
 import Landing from "../components/Landing.vue";
+import HelpGuide from "../components/HelpGuide.vue";
 
 const routes = [
   {
@@ -43,6 +44,11 @@ const routes = [
     path: "/about",
     name: "About",
     component: About,
+  },
+  {
+    path: "/help",
+    name: "Help",
+    component: HelpGuide,
   },
 ];
 

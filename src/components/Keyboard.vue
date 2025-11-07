@@ -413,7 +413,6 @@ defineProps({
   display: inline-flex;
   flex-direction: column;
   gap: 3px;
-  padding: 12px;
   border: none;
   max-width: calc(100vw - 2rem);
   width: fit-content;
