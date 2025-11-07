@@ -4,8 +4,8 @@ import { useRouter } from "vue-router";
 import { getSelectedLevel, getSelectedTopic } from "../composables/useLevel";
 import { generateSentences } from "../api/levelMap";
 import { getAnswer } from "../api/zhuyinDictionary";
-import CharDisplay from "./CharDisplay.vue";
-import Keyboard from "./Keyboard.vue";
+import CharDisplay from "./../components/CharDisplay.vue";
+import Keyboard from "./../components/Keyboard.vue";
 import {
   makeQuiz,
   registerQuestion,

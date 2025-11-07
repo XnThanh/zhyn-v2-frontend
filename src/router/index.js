@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import LevelSelect from "../components/LevelSelect.vue";
-import TopicSelect from "../components/TopicSelect.vue";
-import Practice from "../components/Practice.vue";
-import Results from "../components/Results.vue";
+import LevelSelect from "../pages/LevelSelect.vue";
+import TopicSelect from "../pages/TopicSelect.vue";
+import Practice from "../pages/Practice.vue";
+import Results from "../pages/Results.vue";
 import ApiPlayground from "../components/ApiPlayground.vue";
 import About from "../components/About.vue";
-import Landing from "../components/Landing.vue";
+import Landing from "../pages/Landing.vue";
 import HelpGuide from "../components/HelpGuide.vue";
 
 const routes = [
