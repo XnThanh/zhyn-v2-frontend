@@ -67,14 +67,17 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="topic-select">
+  <div
+    class="topic-select dark-overlay dark-overlay-70 blur-overlay"
+    style="--blur-amount: 4px"
+  >
     <div class="topic-select-container">
-      <h1 class="title">Select Topic</h1>
+      <h1 class="title font-mono">Select Topic</h1>
       <div class="topics-list">
         <div
           v-for="(topic, idx) in defaultTopics"
           :key="topic"
-          class="topic-item"
+          class="topic-item font-mono"
           :class="{ selected: selectedIndex === idx && !isCustom }"
           @click="selectTopic(idx)"
           @mouseenter="
@@ -121,8 +124,8 @@ onUnmounted(() => {
 
 <style scoped>
 .topic-select {
-  /* max-height: calc(100dvh - 60px); */
-  height: calc(100dvh - 60px);
+  background: url("./../assets/taipei101-background2.jpg") no-repeat top center;
+  height: 100vh;
   min-height: 0;
   width: 100vw;
   display: flex;
@@ -145,10 +148,11 @@ onUnmounted(() => {
   justify-content: center;
   text-align: center;
   gap: 2.5vh;
+  z-index: 1;
 }
 
 .title {
-  font-size: 2.2rem;
+  font-size: 2.5rem;
   font-weight: bold;
   color: white;
   margin-bottom: 2vh;
@@ -214,7 +218,7 @@ onUnmounted(() => {
 }
 
 .topic-name {
-  font-size: 1.3rem;
+  font-size: 2rem;
   text-align: center;
 }
 

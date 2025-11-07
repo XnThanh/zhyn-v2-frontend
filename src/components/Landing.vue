@@ -8,7 +8,7 @@ const router = useRouter();
 const handleKeyDown = (event) => {
   if (event.code === "Space") {
     event.preventDefault();
-    router.push("/home");
+    router.push("/level");
   } else if (event.key === "h" || event.key === "H") {
     event.preventDefault();
     router.push("/help");

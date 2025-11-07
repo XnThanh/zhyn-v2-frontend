@@ -46,11 +46,11 @@ body {
   place-items: center;
   min-width: 320px;
   height: 100vh;
-  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url("./assets/taipei101-background.png") no-repeat top center;
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: top center;
+  /* background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+    url("./assets/taipei101-background.png") no-repeat top center; */
+  /* background-size: cover; */
+  /* background-attachment: fixed;
+  background-position: top center; */
   /* Crop bottom by covering and anchoring top, darken with overlay */
 }
 

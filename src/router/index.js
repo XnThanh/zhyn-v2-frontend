@@ -16,8 +16,8 @@ const routes = [
     meta: { hideNavbar: true },
   },
   {
-    path: "/home",
-    name: "Home",
+    path: "/level",
+    name: "LevelSelect",
     component: LevelSelect,
   },
   {
@@ -49,6 +49,7 @@ const routes = [
     path: "/help",
     name: "Help",
     component: HelpGuide,
+    meta: { transition: "slide-up" },
   },
 ];
 

@@ -45,11 +45,14 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="level-select">
+  <div
+    class="level-select dark-overlay dark-overlay-70 blur-overlay"
+    style="--blur-amount: 3px"
+  >
     <div class="level-select-container">
-      <h1 class="title">Select Level</h1>
+      <h1 class="title font-mono">Select Level</h1>
 
-      <div class="levels-list">
+      <div class="levels-list font-mono">
         <div
           v-for="(level, index) in levels"
           :key="level.id"
@@ -73,7 +76,11 @@ onUnmounted(() => {
 
 <style scoped>
 .level-select {
-  height: calc(100vh - 60px);
+  background: url("./../assets/taipei101-background2.jpg") no-repeat top center;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: top center;
+  height: 100vh;
   min-height: 0;
   display: flex;
   align-items: center;
@@ -91,6 +98,7 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   height: 100%;
+  z-index: 1;
 }
 
 .title {
