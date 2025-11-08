@@ -23,7 +23,7 @@ const selectedTopic = computed(() => getSelectedTopic());
 const currentCharIdx = ref(0); // index of the current character to type
 
 // Countdown timer
-const initialTime = 30; // seconds (DEVELOPMENT: reduced from 60 for testing)
+const initialTime = 60; // seconds (DEVELOPMENT: reduced from 60 for testing)
 const timeLeft = ref(initialTime);
 let timer = null;
 let quizExpiryTime = null; // Backend expiry time
